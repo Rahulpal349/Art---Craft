@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Art &amp; Craft Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo"><img src="assets/images/logo.svg" alt="Logo" style="height:32px; vertical-align:middle; margin-right:8px;">Art &amp; Craft</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="collections.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="login.html" aria-label="Account" class="icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </a>
+            <a href="cart.html" aria-label="Cart" class="icon-link" style="display: flex; align-items: center; gap: 4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span style="font-size: 0.95rem; font-weight: 500;">(0)</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="section-header" style="margin-top: 3rem; margin-bottom: 0;">
+        <h1>Your Selection</h1>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="section-header" style="margin-top: 3rem; margin-bottom: 0;">
+        <h1>Your Selection</h1>
+        <p>Items carefully chosen for your collection.</p>
+    </div>
+
+    <!-- Cart Layout -->
+    <section class="cart-layout">
+        <!-- Cart Items -->
+        <div class="cart-items">
+            <!-- Items rendered via js/api.js -->
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">Order Summary</h3>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>₹5,610</span>
+            </div>
+            <div class="summary-row">
+                <span>Estimated Shipping</span>
+                <span>Calculated at checkout</span>
+            </div>
+            <div class="summary-total">
+                <span>Total</span>
+                <span>₹5,610</span>
+            </div>
+            <a href="checkout.html" class="btn btn-primary" style="width: 100%; text-align: center; margin-bottom: 1rem;">Proceed to Checkout</a>
+            <p style="font-size: 0.8rem; text-align: center; color: #64748b;">Every piece is verified and packed securely in artisanal eco-friendly packaging.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright" style="border-top: none;">
+            &copy; 2026 Art &amp; Craft Gallery. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+</body>
+</html>
+

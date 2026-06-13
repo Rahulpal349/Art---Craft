@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History | Artisanat Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .order-history-card {
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="font-size: 1.5rem;">Artisanat Gallery</a>
+        <ul class="nav-links">
+            <li><a href="collections.html">Gallery</a></li>
+            <li><a href="collections.html">Artists</a></li>
+            <li><a href="collections.html">Exhibitions</a></li>
+            <li><a href="collections.html">Curation</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="cart.html" aria-label="Cart" class="icon-link" style="display: flex; align-items: center; gap: 4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span class="cart-badge" style="position: absolute; top: 12px; right: 48px; background: var(--secondary); color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 600;">2</span>
+            </a>
+            <a href="login.html" aria-label="Account" class="icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Curator Dashboard Layout -->
+    <div class="dashboard-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-user">
+                <div class="dashboard-user-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                <div class="dashboard-user-info">
+                    <p class="name">Welcome, Artisan</p>
+                    <p class="status">Premium Member</p>
+                </div>
+            </div>
+
+            <ul class="dashboard-nav">
+                <li>
+                    <a href="account.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <strong>Curator</strong> Portal
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        Collections
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html" class="active">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        Message Artist
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+
+            <button class="dashboard-appraisal-btn">Request Appraisal</button>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-main">
+            
+            <header class="dashboard-header">
+                <h1>Order History</h1>
+                <p>Track the status of your requested pieces.</p>
+            </header>
+
+            <!-- Order 1 -->
+            <div class="order-history-card">
+                <div class="order-header">
+                    <div>
+                        <p style="font-weight: 600;">Order #ORD-1044</p>
+                        <p style="color: #64748b; font-size: 0.9rem;">Placed on Oct 11, 2026</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">₹1,240</p>
+                        <span style="font-size: 0.7rem; padding: 0.35rem 0.65rem; background: #E8F1F8; color: var(--primary); border-radius: 20px; font-weight: 600; text-transform: uppercase;">Out for Delivery</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1.5rem; align-items: center;">
+                    <div style="width: 80px; height: 80px; background: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=100') center/cover; border-radius: 4px;"></div>
+                    <div>
+                        <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem;">Tidal Resonance</p>
+                        <p style="color: #64748b; font-size: 0.9rem;">Qty: 1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order 2 -->
+            <div class="order-history-card">
+                <div class="order-header">
+                    <div>
+                        <p style="font-weight: 600;">Order #ORD-0891</p>
+                        <p style="color: #64748b; font-size: 0.9rem;">Placed on Sep 02, 2026</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="font-weight: 600; color: var(--primary); margin-bottom: 0.5rem;">₹850</p>
+                        <span style="font-size: 0.7rem; padding: 0.35rem 0.65rem; background: #f1f5f9; color: #64748b; border-radius: 20px; font-weight: 600; text-transform: uppercase;">Delivered</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1.5rem; align-items: center;">
+                    <div style="width: 80px; height: 80px; background: url('https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=100') center/cover; border-radius: 4px;"></div>
+                    <div>
+                        <p style="font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem;">Azure Minimalist Set</p>
+                        <p style="color: #64748b; font-size: 0.9rem;">Qty: 1</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: #1A202C; padding: 4rem 5%; color: #94A3B8;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: none;">
+            <h2 style="color: var(--white); font-family: var(--font-heading);">Artisanat Gallery</h2>
+            <div style="display: flex; gap: 2rem; font-size: 0.85rem;">
+                <a href="privacy-policy.html" style="color: #94A3B8; text-decoration: none;">Privacy Policy</a>
+                <a href="terms.html" style="color: #94A3B8; text-decoration: none;">Terms of Service</a>
+                <a href="refund-policy.html" style="color: #94A3B8; text-decoration: none;">Shipping & Returns</a>
+                <a href="contact.html" style="color: #94A3B8; text-decoration: none;">Contact Us</a>
+            </div>
+            <div style="font-size: 0.85rem;">
+                &copy; 2024 Artisanat Gallery. Curated Excellence.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+

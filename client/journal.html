@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal | Art &amp; Craft Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .journal-header {
+            text-align: center;
+            padding: 5rem 5% 3rem;
+        }
+        .featured-post {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 0;
+            margin: 0 5% 4rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .featured-img {
+            background: url('https://images.unsplash.com/photo-1490214300455-87e0766ea9d9?q=80&w=2072&auto=format&fit=crop') center/cover;
+            min-height: 400px;
+        }
+        .featured-content {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .post-tag {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .journal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem 2rem;
+            padding: 0 5% 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .post-card {
+            transition: transform 0.3s ease;
+        }
+        .post-card:hover { transform: translateY(-5px); }
+        .post-card-img {
+            height: 250px;
+            background: #cbd5e1;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius);
+        }
+        .post-card h3 { font-size: 1.5rem; margin-bottom: 1rem; line-height: 1.3; }
+        .post-card p { color: #475569; font-size: 0.95rem; margin-bottom: 1rem; }
+        
+        @media (max-width: 900px) {
+            .featured-post { grid-template-columns: 1fr; }
+            .featured-img { height: 300px; }
+            .featured-content { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo"><img src="assets/images/logo.svg" alt="Logo" style="height:32px; vertical-align:middle; margin-right:8px;">Art &amp; Craft</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="collections.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="login.html" aria-label="Account" class="icon-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </a>
+            <a href="cart.html" aria-label="Cart" class="icon-link" style="display: flex; align-items: center; gap: 4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span style="font-size: 0.95rem; font-weight: 500;">(0)</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="journal-header">
+        <h1 style="font-size: 3.5rem; margin-bottom: 1rem;">The Artisan's Journal</h1>
+        <p style="color: #475569; max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Behind-the-scenes stories, studio visits, and explorations into the philosophy of the hand-made.</p>
+    </div>
+
+    <!-- Featured Post -->
+    <article class="featured-post">
+        <div class="featured-img"></div>
+        <div class="featured-content">
+            <span class="post-tag">Studio Visit</span>
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.1;">The Alchemist's Kiln: A Day with Elena Rossi</h2>
+            <p style="color: #475569; margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.6;">We traveled to the coastal ridges to document the four-day firing process of our newest ceramic collection, discovering how natural oxides dictate the final form.</p>
+            <a href="#" style="font-weight: 600; color: var(--primary); text-decoration: underline; text-underline-offset: 4px;">Read Full Story</a>
+        </div>
+    </article>
+
+    <!-- Grid -->
+    <div class="journal-grid">
+        <article class="post-card">
+            <div class="post-card-img" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
+            <span class="post-tag">Materials</span>
+            <h3>The Sustainability of Slow Woodworking</h3>
+            <p>How our artisans source fallen timber to create pieces that respect the forest's timeline.</p>
+            <a href="#" style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">Continue Reading →</a>
+        </article>
+
+        <article class="post-card">
+            <div class="post-card-img" style="background-image: url('https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
+            <span class="post-tag">Curation</span>
+            <h3>Setting the Stage: Decorating with Indigo</h3>
+            <p>Interior design tips on utilizing our signature indigo glaze to anchor a living space.</p>
+            <a href="#" style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">Continue Reading →</a>
+        </article>
+
+        <article class="post-card">
+            <div class="post-card-img" style="background-image: url('https://images.unsplash.com/photo-1565193566173-7a0f49f0679a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
+            <span class="post-tag">Interviews</span>
+            <h3>Finding Clarity in Glass</h3>
+            <p>An intimate conversation with Sanae Tanaka on her meticulous glass-blowing techniques.</p>
+            <a href="#" style="font-size: 0.85rem; font-weight: 600; color: var(--primary);">Continue Reading →</a>
+        </article>
+    </div>
+
+    <footer><div class="copyright" style="border-top: none;">&copy; 2026 Art &amp; Craft Gallery. All rights reserved.</div></footer>
+</body>
+</html>
+
