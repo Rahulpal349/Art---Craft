@@ -1,4 +1,4 @@
-/* =========================================
+﻿/* =========================================
    ARTISANAT GALLERY - DESIGN SYSTEM
    ========================================= */
 
@@ -645,21 +645,6 @@ footer {
 }
 
 .checkout-form .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-.checkout-form label {
-    display: block;
-    margin-bottom: 3rem;
-}
-
-.auth-card {
-    background: var(--white);
-    width: 100%;
-    max-width: 440px;
-    border-radius: 8px;
     box-shadow: 0 10px 25px rgba(30, 58, 95, 0.05);
     padding: 3rem 2.5rem;
     position: relative;
@@ -1267,3 +1252,4 @@ footer {
         margin-bottom: 2rem;
     }
 }
+
