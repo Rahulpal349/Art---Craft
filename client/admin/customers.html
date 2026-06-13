@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders | Art &amp; Craft Admin</title>
+    <title>Customers | Art &amp; Craft Admin</title>
     <link rel="stylesheet" href="css/admin.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="admin-layout">
@@ -16,19 +15,19 @@
                     <h2>Artisanat Admin</h2>
                 </div>
                 <ul class="sidebar-nav">
-                    <li><a href="dashboard.html" >Dashboard</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
                     <li><a href="products.html">Products</a></li>
-                    <li><a href="orders.html" class="active">Orders</a></li>
-                    <li><a href="customers.html">Customers</a></li>
+                    <li><a href="orders.html">Orders</a></li>
+                    <li><a href="customers.html" class="active">Customers</a></li>
                 </ul>
             </div>
         </aside>
 
         <main class="main-content">
-                        <header class="topbar">
+            <header class="topbar">
                 <div class="topbar-search">
                     <span style="color:#64748b;">&#128269;</span>
-                    <input type="text" placeholder="Search...">
+                    <input type="text" placeholder="Search customers...">
                 </div>
                 <div class="topbar-actions">
                     <button class="icon-btn">&#128276;</button>
@@ -39,22 +38,23 @@
             <div class="content-area">
                 <div class="table-container">
                     <div class="table-header">
-                        <h2>All Orders</h2>
+                        <h2>All Customers</h2>
+                        <button class="btn-primary">+ Add Customer</button>
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Date</th>
-                                <th>Amount</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Join Date</th>
+                                <th>Total Orders</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="6" style="text-align: center; padding: 2rem; color: #64748b;">No orders found.</td>
+                                <td colspan="6" style="text-align: center; padding: 2rem; color: #64748b;">No customers found.</td>
                             </tr>
                         </tbody>
                     </table>

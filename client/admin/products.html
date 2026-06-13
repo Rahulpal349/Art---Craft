@@ -5,28 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products | Art &amp; Craft Admin</title>
     <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="admin-layout">
         <aside class="sidebar">
-            <div class="sidebar-header">
-            <img src="../assets/images/logo.svg" alt="Logo" style="height: 32px; filter: brightness(0) invert(1);">
-            <h2>Artisanat Admin</h2>
-        </div>
-            <ul class="sidebar-nav">
-                <li><a href="dashboard.html">Overview</a></li>
-                <li><a href="products.html" class="active">Products</a></li>
-                <li><a href="orders.html">Orders</a></li>
-                <li><a href="customers.html">Customers</a></li>
-                <li><a href="settings.html">Settings</a></li>
-            </ul>
+            <div>
+                <div class="sidebar-header">
+                    <img src="../assets/images/logo.svg" alt="Logo" style="height: 32px; filter: brightness(0) invert(1);">
+                    <h2>Artisanat Admin</h2>
+                </div>
+                <ul class="sidebar-nav">
+                    <li><a href="dashboard.html" >Dashboard</a></li>
+                    <li><a href="products.html" class="active">Products</a></li>
+                    <li><a href="orders.html" >Orders</a></li>
+                    <li><a href="customers.html">Customers</a></li>
+                </ul>
+            </div>
         </aside>
 
         <main class="main-content">
-            <header class="topbar">
-                <span>Products Management</span>
-                <div>
-                    <span>Admin User</span> | <a href="admin-login.html" style="color: #64748b; text-decoration: none;">Logout</a>
+                        <header class="topbar">
+                <div class="topbar-search">
+                    <span style="color:#64748b;">&#128269;</span>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn">&#128276;</button>
+                    <button class="icon-btn">&#9711;</button>
                 </div>
             </header>
 

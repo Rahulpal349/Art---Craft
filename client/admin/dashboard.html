@@ -5,28 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Art &amp; Craft</title>
     <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="admin-layout">
         <aside class="sidebar">
-            <div class="sidebar-header">
-            <img src="../assets/images/logo.svg" alt="Logo" style="height: 32px; filter: brightness(0) invert(1);">
-            <h2>Artisanat Admin</h2>
-        </div>
-            <ul class="sidebar-nav">
-                <li><a href="dashboard.html" class="active">Overview</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="orders.html">Orders</a></li>
-                <li><a href="customers.html">Customers</a></li>
-                <li><a href="settings.html">Settings</a></li>
-            </ul>
+            <div>
+                <div class="sidebar-header">
+                    <img src="../assets/images/logo.svg" alt="Logo" style="height: 32px; filter: brightness(0) invert(1);">
+                    <h2>Artisanat Admin</h2>
+                </div>
+                <ul class="sidebar-nav">
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="orders.html" >Orders</a></li>
+                    <li><a href="customers.html">Customers</a></li>
+                </ul>
+            </div>
         </aside>
 
         <main class="main-content">
-            <header class="topbar">
-                <span>Dashboard</span>
-                <div>
-                    <span>Admin User</span> | <a href="admin-login.html" style="color: #64748b; text-decoration: none;">Logout</a>
+                        <header class="topbar">
+                <div class="topbar-search">
+                    <span style="color:#64748b;">&#128269;</span>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="topbar-actions">
+                    <button class="icon-btn">&#128276;</button>
+                    <button class="icon-btn">&#9711;</button>
                 </div>
             </header>
 
@@ -34,19 +40,19 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>Total Revenue</h3>
-                        <div class="value">₹1,24,500</div>
+                        <div class="value">₹0</div>
                     </div>
                     <div class="stat-card">
                         <h3>Total Orders</h3>
-                        <div class="value">142</div>
+                        <div class="value">0</div>
                     </div>
                     <div class="stat-card">
                         <h3>Total Products</h3>
-                        <div class="value">38</div>
+                        <div class="value">0</div>
                     </div>
                     <div class="stat-card">
                         <h3>Total Customers</h3>
-                        <div class="value">89</div>
+                        <div class="value">0</div>
                     </div>
                 </div>
 
@@ -67,18 +73,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>#ORD-092</td>
-                                <td>Sarah Jenkins</td>
-                                <td>Oct 12, 2026</td>
-                                <td>₹5,610</td>
-                                <td><span class="badge badge-warning">Processing</span></td>
-                            </tr>
-                            <tr>
-                                <td>#ORD-091</td>
-                                <td>Michael Chang</td>
-                                <td>Oct 11, 2026</td>
-                                <td>₹2,100</td>
-                                <td><span class="badge badge-success">Shipped</span></td>
+                                <td colspan="5" style="text-align: center; padding: 2rem; color: #64748b;">No recent orders.</td>
                             </tr>
                         </tbody>
                     </table>
