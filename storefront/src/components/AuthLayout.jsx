@@ -6,7 +6,7 @@ export default function AuthLayout({ children, leftImage, leftQuote, showTag }) 
     <div className="auth-layout">
       <div className="auth-header">
         <Link to="/">
-          Artisanat Gallery
+          Art & Craft
         </Link>
       </div>
       
@@ -31,7 +31,7 @@ export default function AuthLayout({ children, leftImage, leftQuote, showTag }) 
       </div>
       
       <div className="auth-footer">
-        <div>&copy; 2024 Artisanat Gallery. Hand-built for the discerning collector.</div>
+        <div>&copy; 2024 Art & Craft. Hand-built for the discerning collector.</div>
         <div className="auth-footer-links">
           <Link to="/privacy-policy">PRIVACY POLICY</Link>
           <Link to="/terms">TERMS OF SERVICE</Link>

@@ -12,7 +12,7 @@ export default function About() {
             The Quiet Luxury of Hand-Made
           </h1>
           <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, maxWidth: '500px' }}>
-            Artisanat is a curated sanctuary for master craftsmanship, where every object tells a story of patience, material, and the human hand.
+            Art & Craft is a curated sanctuary for master craftsmanship, where every object tells a story of patience, material, and the human hand.
           </p>
         </div>
       </section>
@@ -23,7 +23,7 @@ export default function About() {
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', color: '#0f172a', margin: '0 0 2rem' }}>Our Mission</h2>
           <div style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.8 }}>
             <p style={{ marginBottom: '1.5rem' }}>
-              In an era of mass production, Artisanat serves as a bridge between traditional heritage and contemporary living. We believe that the objects we surround ourselves with should possess a soul.
+              In an era of mass production, Art & Craft serves as a bridge between traditional heritage and contemporary living. We believe that the objects we surround ourselves with should possess a soul.
             </p>
             <p>
               Our gallery exclusively partners with independent artisans who honor ancestral techniques while pushing the boundaries of modern design. We curate pieces that are intended to be lived with, touched, and passed down through generations.

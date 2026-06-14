@@ -1,9 +1,25 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [activeAccordion, setActiveAccordion] = useState('process');
+  const { addToCart } = useCart();
+  const [isAdding, setIsAdding] = useState(false);
+
+  const product = {
+    id: 1,
+    name: "Indigo Glaze Vase",
+    price: 1240.00,
+    image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800"
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+    setIsAdding(true);
+    setTimeout(() => setIsAdding(false), 800);
+  };
 
   return (
     <div className="product-detail-page">
@@ -37,7 +53,7 @@ export default function ProductDetail() {
           </h1>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-            <span style={{ fontSize: '1.25rem', color: '#1e3a8a', fontWeight: 500 }}>$340.00</span>
+            <span style={{ fontSize: '1.25rem', color: '#1e3a8a', fontWeight: 500 }}>₹1240.00</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.8rem', color: '#64748b' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#1e3a8a" stroke="#1e3a8a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               5.0 (28 Reviews)
@@ -54,9 +70,14 @@ export default function ProductDetail() {
               <span style={{ fontWeight: 500 }}>{quantity}</span>
               <button onClick={() => setQuantity(quantity + 1)} style={{ background: 'none', border: 'none', padding: '1rem', cursor: 'pointer', color: '#64748b' }}>+</button>
             </div>
-            <button className="btn btn-primary" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem' }}>
-              Add to Cart
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <button 
+              className={`btn btn-primary ${isAdding ? 'btn-added' : ''}`} 
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', transition: 'all 0.3s ease' }}
+              onClick={handleAddToCart}
+              disabled={isAdding}
+            >
+              {isAdding ? 'Added!' : 'Add to Cart'}
+              {!isAdding && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>}
             </button>
           </div>
           
@@ -107,7 +128,7 @@ export default function ProductDetail() {
         </div>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2rem', color: '#0f172a', marginBottom: '1rem' }}>The Artisan's Guarantee</h2>
         <p style={{ color: '#475569', maxWidth: '600px', margin: '0 auto', lineHeight: 1.6 }}>
-          Every piece in the Artisanat gallery is vetted for sustainable material sourcing and ethical production. When you purchase this vase, you are supporting a multi-generational legacy of British ceramicists.
+          Every piece in the Art & Craft gallery is vetted for sustainable material sourcing and ethical production. When you purchase this vase, you are supporting a multi-generational legacy of British ceramicists.
         </p>
       </div>
 
@@ -124,22 +145,22 @@ export default function ProductDetail() {
           <div className="product-card">
             <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=400" alt="Sea Mist Nesting Bowls" style={{ width: '100%', height: 'auto', marginBottom: '1rem' }} />
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', margin: '0 0 0.5rem' }}>Sea Mist Nesting Bowls</h3>
-            <p style={{ color: '#475569', margin: 0 }}>$125.00</p>
+            <p style={{ color: '#475569', margin: 0 }}>₹125.00</p>
           </div>
           <div className="product-card">
             <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=400" alt="Slate Linen Runner" style={{ width: '100%', height: 'auto', marginBottom: '1rem' }} />
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', margin: '0 0 0.5rem' }}>Slate Linen Runner</h3>
-            <p style={{ color: '#475569', margin: 0 }}>$85.00</p>
+            <p style={{ color: '#475569', margin: 0 }}>₹85.00</p>
           </div>
           <div className="product-card">
             <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=400" alt="Cobalt Water Pitcher" style={{ width: '100%', height: 'auto', marginBottom: '1rem' }} />
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', margin: '0 0 0.5rem' }}>Cobalt Water Pitcher</h3>
-            <p style={{ color: '#475569', margin: 0 }}>$110.00</p>
+            <p style={{ color: '#475569', margin: 0 }}>₹110.00</p>
           </div>
           <div className="product-card">
             <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=400" alt="Speckled Clay Holders" style={{ width: '100%', height: 'auto', marginBottom: '1rem' }} />
             <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', margin: '0 0 0.5rem' }}>Speckled Clay Holders</h3>
-            <p style={{ color: '#475569', margin: 0 }}>$72.00</p>
+            <p style={{ color: '#475569', margin: 0 }}>₹72.00</p>
           </div>
         </div>
       </div>

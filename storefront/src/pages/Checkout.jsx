@@ -1,10 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function Checkout() {
+  const { cart, cartTotal } = useCart();
+  
+  if (cart.length === 0) {
+    return <Navigate to="/cart" />;
+  }
+  
+  const shipping = cartTotal > 1000 ? 0 : 25.00;
+  const tax = cartTotal * 0.08;
+  const finalTotal = cartTotal + shipping + tax;
+
   return (
     <div className="checkout-page" style={{ background: '#f8fafc', minHeight: '100vh', padding: '2rem 0' }}>
       <div className="checkout-header" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", margin: 0, color: '#0f172a' }}>Artisanat</h2>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", margin: 0, color: '#0f172a' }}>Art & Craft</h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', fontWeight: 600, color: '#475569', letterSpacing: '0.05em' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           SECURE CHECKOUT
@@ -114,46 +125,36 @@ export default function Checkout() {
           <div className="order-summary-card" style={{ background: '#f0f4f8', padding: '2rem', borderRadius: '4px' }}>
             <h3 style={{ fontFamily: "'Playfair Display', serif", color: '#1e3a8a', fontSize: '1.5rem', marginBottom: '1.5rem', fontWeight: 500 }}>Order Summary</h3>
             
-            <div style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem', marginBottom: '1rem' }}>
-              <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=150" alt="Vase" style={{ width: '60px', height: '60px', objectFit: 'cover' }} />
-              <div style={{ flex: 1, fontSize: '0.85rem' }}>
-                <h4 style={{ margin: '0 0 0.25rem', color: '#1e3a8a' }}>Indigo Glaze Vessel</h4>
-                <div style={{ color: '#64748b', fontSize: '0.75rem', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>HANDMADE • LIMITED</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
-                  <span>Qty: 1</span>
-                  <strong style={{ color: '#0f172a' }}>$240.00</strong>
+            {cart.map(item => (
+              <div key={item.id} style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem', marginBottom: '1rem' }}>
+                <img src={item.image} alt={item.name} style={{ width: '60px', height: '60px', objectFit: 'cover' }} />
+                <div style={{ flex: 1, fontSize: '0.85rem' }}>
+                  <h4 style={{ margin: '0 0 0.25rem', color: '#1e3a8a' }}>{item.name}</h4>
+                  <div style={{ color: '#64748b', fontSize: '0.75rem', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>ART & CRAFT</div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
+                    <span>Qty: {item.quantity}</span>
+                    <strong style={{ color: '#0f172a' }}>₹{(item.price * item.quantity).toFixed(2)}</strong>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div style={{ display: 'flex', gap: '1rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
-              <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=150" alt="Throw" style={{ width: '60px', height: '60px', objectFit: 'cover' }} />
-              <div style={{ flex: 1, fontSize: '0.85rem' }}>
-                <h4 style={{ margin: '0 0 0.25rem', color: '#1e3a8a' }}>Hand-woven Linen Throw</h4>
-                <div style={{ color: '#64748b', fontSize: '0.75rem', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>TEXTILES</div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#475569' }}>
-                  <span>Qty: 1</span>
-                  <strong style={{ color: '#0f172a' }}>$185.00</strong>
-                </div>
-              </div>
-            </div>
+            ))}
             
             <div className="summary-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', color: '#475569', fontSize: '0.9rem' }}>
               <span>Subtotal</span>
-              <span>$425.00</span>
+              <span>₹{cartTotal.toFixed(2)}</span>
             </div>
             <div className="summary-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', color: '#475569', fontSize: '0.9rem' }}>
               <span>Shipping</span>
-              <span>$15.00</span>
+              <span>{shipping === 0 ? 'Complimentary' : `₹${shipping.toFixed(2)}`}</span>
             </div>
             <div className="summary-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', color: '#475569', fontSize: '0.9rem' }}>
-              <span>Taxes</span>
-              <span>$34.00</span>
+              <span>Taxes (Estimated 8%)</span>
+              <span>₹{tax.toFixed(2)}</span>
             </div>
             
             <div className="summary-total" style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #cbd5e1', paddingTop: '1.5rem', marginBottom: '2rem', fontSize: '1.5rem', fontWeight: 600, color: '#1e3a8a' }}>
               <span>Total</span>
-              <span>$474.00</span>
+              <span>₹{finalTotal.toFixed(2)}</span>
             </div>
 
             <div className="summary-badges" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.8rem', color: '#475569' }}>

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function Shop() {
+  const { addToCart } = useCart();
   const [products, setProducts] = useState([
     { id: 1, name: "Indigo Glaze Vase", price: 1240, image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=600&auto=format&fit=crop" },
     { id: 2, name: "Linen Throw Blanket", price: 2185, image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
@@ -11,6 +13,13 @@ export default function Shop() {
     { id: 6, name: "Woven Rattan Basket", price: 1550, image: "https://images.unsplash.com/photo-1595514686762-11c50117a1a4?q=80&w=600&auto=format&fit=crop" }
   ]);
   const [loading, setLoading] = useState(false);
+  const [addingId, setAddingId] = useState(null);
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    setAddingId(product.id);
+    setTimeout(() => setAddingId(null), 800);
+  };
 
   return (
     <section className="section">
@@ -26,12 +35,21 @@ export default function Shop() {
               {products.map(product => (
                 <div key={product.id} className="product-card">
                     <div className="product-img">
-                        <img src={product.image} alt={product.name} />
+                        <Link to={`/product/${product.id}`}>
+                            <img src={product.image} alt={product.name} />
+                        </Link>
                     </div>
                     <div className="product-info">
-                        <h3>{product.name}</h3>
-                        <p className="product-price">₹{product.price}</p>
-                        <button className="btn btn-primary" style={{ width: "100%" }}>Add to Cart</button>
+                        <h3><Link to={`/product/${product.id}`} style={{textDecoration:'none', color:'inherit'}}>{product.name}</Link></h3>
+                        <p className="product-price">₹{product.price.toFixed(2)}</p>
+                        <button 
+                            className={`btn btn-primary ${addingId === product.id ? 'btn-added' : ''}`} 
+                            style={{ width: "100%" }}
+                            onClick={() => handleAddToCart(product)}
+                            disabled={addingId === product.id}
+                        >
+                            {addingId === product.id ? 'Added!' : 'Add to Cart'}
+                        </button>
                     </div>
                 </div>
               ))}

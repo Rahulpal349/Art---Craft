@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 import './pages.css';
+import { CartProvider } from './context/CartContext';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import About from './pages/About';
@@ -12,10 +13,14 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import ProductDetail from './pages/ProductDetail';
 import Terms from './pages/Terms';
+import CorporateOrders from './pages/CorporateOrders';
+import FAQ from './pages/FAQ';
+import UserDashboard from './pages/UserDashboard';
 
 function App() {
   return (
-    <Router>
+    <CartProvider>
+      <Router>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
@@ -25,6 +30,9 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/corporate" element={<CorporateOrders />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/dashboard" element={<UserDashboard />} />
         </Route>
         
         <Route path="/login" element={<Login />} />
@@ -33,6 +41,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>
+    </CartProvider>
   );
 }
 

@@ -15,7 +15,7 @@ export default function Login() {
         <div className="auth-form-group">
           <label htmlFor="email">Email Address</label>
           <div className="auth-input-wrapper">
-            <input type="email" id="email" className="auth-input" placeholder="collector@artisanat.com" />
+            <input type="email" id="email" className="auth-input" placeholder="collector@artandcraft.com" />
           </div>
         </div>
 

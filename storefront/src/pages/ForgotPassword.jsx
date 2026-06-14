@@ -18,7 +18,7 @@ export default function ForgotPassword() {
         <div className="auth-form-group" style={{ marginBottom: '2rem' }}>
           <label htmlFor="email">Email Address</label>
           <div className="auth-input-wrapper">
-            <input type="email" id="email" className="auth-input" placeholder="e.g. collector@artisanat.com" />
+            <input type="email" id="email" className="auth-input" placeholder="e.g. collector@artandcraft.com" />
           </div>
         </div>
 

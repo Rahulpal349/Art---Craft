@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 const SLIDES = [
   {
@@ -40,6 +41,20 @@ const SLIDES = [
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { addToCart } = useCart();
+  const [addingId, setAddingId] = useState(null);
+
+  const FEATURED_PRODUCTS = [
+    { id: 1, name: "Indigo Glaze Vase", price: 1240, image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=600&auto=format&fit=crop" },
+    { id: 2, name: "Linen Throw Blanket", price: 2185, image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
+    { id: 3, name: "Walnut Wood Platter", price: 850, image: "https://images.unsplash.com/photo-1604578762246-41134e37f9cc?q=80&w=600&auto=format&fit=crop" }
+  ];
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    setAddingId(product.id);
+    setTimeout(() => setAddingId(null), 800);
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -116,36 +131,27 @@ export default function Home() {
               <p>Our most beloved artisanal artifacts</p>
           </div>
           <div className="product-grid">
-              <div className="product-card">
-                  <div className="product-img">
-                      <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=600&auto=format&fit=crop" alt="Indigo Glaze Vase" />
-                  </div>
-                  <div className="product-info">
-                      <h3>Indigo Glaze Vase</h3>
-                      <p className="product-price">₹1,240</p>
-                      <button className="btn btn-primary" style={{ width: "100%" }}>Add to Cart</button>
-                  </div>
-              </div>
-              <div className="product-card">
-                  <div className="product-img">
-                      <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" alt="Linen Throw Blanket" />
-                  </div>
-                  <div className="product-info">
-                      <h3>Linen Throw Blanket</h3>
-                      <p className="product-price">₹2,185</p>
-                      <button className="btn btn-primary" style={{ width: "100%" }}>Add to Cart</button>
-                  </div>
-              </div>
-              <div className="product-card">
-                  <div className="product-img">
-                      <img src="https://images.unsplash.com/photo-1604578762246-41134e37f9cc?q=80&w=600&auto=format&fit=crop" alt="Walnut Wood Platter" />
-                  </div>
-                  <div className="product-info">
-                      <h3>Walnut Wood Platter</h3>
-                      <p className="product-price">₹850</p>
-                      <button className="btn btn-primary" style={{ width: "100%" }}>Add to Cart</button>
-                  </div>
-              </div>
+              {FEATURED_PRODUCTS.map((product) => (
+                <div className="product-card" key={product.id}>
+                    <div className="product-img">
+                        <Link to={`/product/${product.id}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                          <img src={product.image} alt={product.name} />
+                        </Link>
+                    </div>
+                    <div className="product-info">
+                        <h3><Link to={`/product/${product.id}`} style={{textDecoration:'none', color:'inherit'}}>{product.name}</Link></h3>
+                        <p className="product-price">₹{product.price.toFixed(2)}</p>
+                        <button 
+                            className={`btn btn-primary ${addingId === product.id ? 'btn-added' : ''}`} 
+                            style={{ width: "100%", transition: "all 0.3s ease" }}
+                            onClick={() => handleAddToCart(product)}
+                            disabled={addingId === product.id}
+                        >
+                            {addingId === product.id ? 'Added!' : 'Add to Cart'}
+                        </button>
+                    </div>
+                </div>
+              ))}
           </div>
       </section>
     </>
