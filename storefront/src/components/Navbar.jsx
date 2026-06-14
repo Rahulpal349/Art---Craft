@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 export default function Navbar() {
   const { cartItemCount } = useCart();
+  const location = useLocation(); // Force re-render on route change
   
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+
   return (
     <>
       <div className="announcement-bar">
@@ -21,7 +24,7 @@ export default function Navbar() {
               <li><Link to="/contact">Contact</Link></li>
           </ul>
           <div className="nav-icons">
-              <Link to="/login" aria-label="Account" className="icon-link">
+              <Link to={isAuthenticated ? "/dashboard" : "/login"} aria-label="Account" className="icon-link">
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </Link>
               <Link to="/cart" aria-label="Cart" className="icon-link" style={{display: "flex", alignItems: "center", gap: "4px"}}>

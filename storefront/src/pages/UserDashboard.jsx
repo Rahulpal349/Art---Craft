@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 export default function UserDashboard() {
+  const [userName, setUserName] = useState('Artisan');
+
+  useEffect(() => {
+    const storedName = localStorage.getItem('userName');
+    if (storedName) {
+      setUserName(storedName);
+    }
+  }, []);
+
   return (
     <div className="dashboard-layout" style={{ display: 'grid', gridTemplateColumns: '240px 1fr', minHeight: 'calc(100vh - 80px)' }}>
       
@@ -12,7 +22,7 @@ export default function UserDashboard() {
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <div>
-            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1e3a8a' }}>Welcome, Artisan</div>
+            <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1e3a8a' }}>Welcome, {userName}</div>
             <div style={{ fontSize: '0.7rem', color: '#64748b' }}>Premium Member</div>
           </div>
         </div>
@@ -38,6 +48,17 @@ export default function UserDashboard() {
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             Settings
           </Link>
+          <button 
+            onClick={() => {
+              localStorage.removeItem('isAuthenticated');
+              localStorage.removeItem('userName');
+              window.location.href = '/login';
+            }} 
+            style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', color: '#ef4444', textDecoration: 'none', fontSize: '0.9rem', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', width: '100%', textAlign: 'left', marginTop: 'auto' }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Log Out
+          </button>
         </nav>
 
         <button className="btn btn-primary" style={{ marginTop: 'auto', padding: '0.75rem', width: '100%' }}>Request Appraisal</button>
@@ -47,30 +68,21 @@ export default function UserDashboard() {
       <main style={{ padding: '3rem 5%', background: '#fff' }}>
         
         <div style={{ marginBottom: '3rem' }}>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', color: '#0f172a', margin: '0 0 0.5rem' }}>Welcome back, Julian</h1>
-          <p style={{ color: '#475569', fontSize: '1.05rem', margin: 0 }}>Your personal curatorial collection is evolving beautifully.</p>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', color: '#0f172a', margin: '0 0 0.5rem' }}>Welcome to your Dashboard, {userName}</h1>
+          <p style={{ color: '#475569', fontSize: '1.05rem', margin: 0 }}>Your personal curatorial collection starts here.</p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '2.5fr 1fr', gap: '1.5rem', marginBottom: '4rem' }}>
           
-          <div style={{ border: '1px solid #e2e8f0', borderRadius: '4px', padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-              <div style={{ fontSize: '0.75rem', letterSpacing: '0.1em', color: '#1e3a8a', fontWeight: 600, textTransform: 'uppercase' }}>RECENT ACTIVITY</div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 600, color: '#0284c7', background: '#e0f2fe', padding: '0.25rem 0.75rem', borderRadius: '12px', letterSpacing: '0.05em' }}>OUT FOR DELIVERY</div>
-            </div>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.75rem', color: '#0f172a', margin: '0 0 2rem' }}>Latest Acquisition: "Tidal Resonance"</h2>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=150" alt="Item" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
-              <div style={{ fontSize: '0.9rem', color: '#475569' }}>
-                Artist: <strong>Elena Moretti</strong> • Expected delivery: Tomorrow, Oct 24.
-              </div>
-            </div>
+          <div style={{ border: '1px solid #e2e8f0', borderRadius: '4px', padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', minHeight: '200px' }}>
+            <div style={{ fontSize: '0.75rem', letterSpacing: '0.1em', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', marginBottom: '1rem' }}>RECENT ACTIVITY</div>
+            <p style={{ color: '#94a3b8', fontSize: '1.1rem' }}>No recent activity to display.</p>
           </div>
 
           <div style={{ background: '#0f172a', borderRadius: '4px', padding: '2rem', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
             <div style={{ fontSize: '0.75rem', letterSpacing: '0.1em', color: '#94a3b8', fontWeight: 600, textTransform: 'uppercase', marginBottom: '1rem' }}>TOTAL PIECES COLLECTED</div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '4rem', lineHeight: 1, margin: '0 0 1rem' }}>12</div>
-            <a href="#" style={{ fontSize: '0.75rem', fontWeight: 600, color: 'white', textDecoration: 'underline', textTransform: 'uppercase', letterSpacing: '0.05em' }}>VIEW FULL GALLERY</a>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: '4rem', lineHeight: 1, margin: '0 0 1rem' }}>0</div>
+            <Link to="/collections" style={{ fontSize: '0.75rem', fontWeight: 600, color: 'white', textDecoration: 'underline', textTransform: 'uppercase', letterSpacing: '0.05em' }}>START COLLECTING</Link>
           </div>
 
         </div>
@@ -84,35 +96,9 @@ export default function UserDashboard() {
             <Link to="/collections" style={{ fontSize: '0.8rem', fontWeight: 600, color: '#0f172a', textDecoration: 'underline', textTransform: 'uppercase', letterSpacing: '0.05em' }}>EXPLORE CURATION</Link>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
-            
-            <div>
-              <div style={{ position: 'relative', marginBottom: '1rem' }}>
-                <img src="https://images.unsplash.com/photo-1544207240-8b1025eb0aeb?q=80&w=800&auto=format&fit=crop" alt="Wood Sculpture" style={{ width: '100%', height: '400px', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(255,255,255,0.9)', color: '#0f172a', padding: '0.25rem 0.75rem', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.05em', borderRadius: '2px' }}>ONE-OF-A-KIND</div>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.25rem', margin: '0 0 0.25rem' }}>Obsidian Veil No. 4</h3>
-                  <div style={{ color: '#64748b', fontSize: '0.9rem' }}>Mixed Media on Hand-woven Silk</div>
-                </div>
-                <div style={{ fontWeight: 600, color: '#1e3a8a', fontSize: '1.1rem' }}>₹4,200</div>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-              <div>
-                <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=400" alt="Ceramic Set" style={{ width: '100%', height: '240px', objectFit: 'cover', marginBottom: '1rem' }} />
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', margin: '0 0 0.25rem' }}>Azure Minimalist Set</h3>
-                <div style={{ fontWeight: 600, color: '#475569', fontSize: '0.9rem' }}>₹650</div>
-              </div>
-              <div>
-                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=400&auto=format&fit=crop" alt="Painting" style={{ width: '100%', height: '240px', objectFit: 'cover', marginBottom: '1rem' }} />
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.1rem', margin: '0 0 0.25rem' }}>Tidal Shift Study</h3>
-                <div style={{ fontWeight: 600, color: '#475569', fontSize: '0.9rem' }}>₹1,100</div>
-              </div>
-            </div>
-
+          <div style={{ padding: '3rem', textAlign: 'center', background: '#f8fafc', border: '1px dashed #cbd5e1', borderRadius: '4px' }}>
+            <p style={{ color: '#64748b', fontSize: '1.1rem' }}>Your personalized curation will appear here as you browse the gallery.</p>
+            <Link to="/collections" className="btn btn-primary" style={{ display: 'inline-block', marginTop: '1rem', textDecoration: 'none' }}>Browse Gallery</Link>
           </div>
         </div>
 

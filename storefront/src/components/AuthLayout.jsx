@@ -1,41 +1,28 @@
 import { Link } from 'react-router-dom';
 import '../auth.css';
 
-export default function AuthLayout({ children, leftImage, leftQuote, showTag }) {
+export default function AuthLayout({ children }) {
   return (
     <div className="auth-layout">
-      <div className="auth-header">
-        <Link to="/">
-          Art & Craft
-        </Link>
-      </div>
-      
-      <div className="auth-content">
-        {leftImage && (
-          <div className="auth-side-image">
-            <img src={leftImage} alt="Art piece" />
-            {leftQuote && <p className="auth-quote">"{leftQuote}"</p>}
+      <div className="auth-card-split">
+        {/* Left Side: Brand & Illustration */}
+        <div className="auth-left-panel">
+          <div className="auth-brand">
+            <Link to="/">
+              <img src="/assets/images/logo.svg" alt="Art & Craft Logo" className="auth-logo-svg" />
+              ART & CRAFT
+            </Link>
           </div>
-        )}
-        
-        <div className="auth-card-container">
-          <div className="auth-card">
-            {showTag && (
-              <div className="auth-tag">
-                Hand-built<br/>Legacy
-              </div>
-            )}
-            {children}
+          <div className="auth-illustration-container">
+            <img src="/assets/images/auth_illustration.png" alt="Artisanal Pots Illustration" className="auth-illustration" />
           </div>
         </div>
-      </div>
-      
-      <div className="auth-footer">
-        <div>&copy; 2024 Art & Craft. Hand-built for the discerning collector.</div>
-        <div className="auth-footer-links">
-          <Link to="/privacy-policy">PRIVACY POLICY</Link>
-          <Link to="/terms">TERMS OF SERVICE</Link>
-          <Link to="/contact">CONTACT</Link>
+
+        {/* Right Side: Form Content */}
+        <div className="auth-right-panel">
+          <div className="auth-form-container">
+            {children}
+          </div>
         </div>
       </div>
     </div>
