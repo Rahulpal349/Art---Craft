@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Artisanat Gallery E-commerce",
   "scripts": {
-    "dev": "node ./node_modules/serve/build/main.js ."
+    "dev": "node ./node_modules/concurrently/dist/bin/index.js \"npm run dev --prefix storefront\" \"npm run dev --prefix admin\"",
+    "dev:storefront": "npm run dev --prefix storefront",
+    "dev:admin": "npm run dev --prefix admin"
   },
   "devDependencies": {
+    "concurrently": "^10.0.3",
     "serve": "^14.2.1"
   }
 }
