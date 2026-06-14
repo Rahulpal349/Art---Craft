@@ -1,18 +1,18 @@
-// Base URL for the backend API
-const API_URL = 'http://localhost:5000/api';
+// Initialize Supabase Client
+const SUPABASE_URL = 'https://jsurpluwwqrujaohbatc.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_gBq5FXF-Q7VQ61yY9pXXDA_wR31BUwA';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /**
- * Fetch all products from the backend
+ * Fetch all products from the Supabase database
  */
 async function fetchProducts() {
     try {
-        const response = await fetch(`${API_URL}/products`);
-        if (!response.ok) throw new Error('Failed to fetch products');
-        
-        const products = await response.json();
-        return products;
+        const { data, error } = await supabase.from('products').select('*');
+        if (error) throw error;
+        return data || [];
     } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching products from Supabase:', error);
         return [];
     }
 }
