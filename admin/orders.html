@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Art &amp; Craft</title>
+    <title>Orders | Art &amp; Craft Admin</title>
     <link rel="stylesheet" href="css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -12,13 +12,13 @@
         <aside class="sidebar">
             <div>
                 <div class="sidebar-header">
-                    <img src="../assets/images/logo.svg" alt="Logo" style="height: 32px; filter: brightness(0) invert(1);">
+                    <img src="assets/images/logo.svg" alt="Logo" style="height: 32px; filter: brightness(0) invert(1);">
                     <h2>Artisanat Admin</h2>
                 </div>
                 <ul class="sidebar-nav">
-                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="dashboard.html" >Dashboard</a></li>
                     <li><a href="products.html">Products</a></li>
-                    <li><a href="orders.html" >Orders</a></li>
+                    <li><a href="orders.html" class="active">Orders</a></li>
                     <li><a href="customers.html">Customers</a></li>
                 </ul>
             </div>
@@ -37,29 +37,9 @@
             </header>
 
             <div class="content-area">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Total Revenue</h3>
-                        <div class="value">₹0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Orders</h3>
-                        <div class="value">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Products</h3>
-                        <div class="value">0</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Customers</h3>
-                        <div class="value">0</div>
-                    </div>
-                </div>
-
                 <div class="table-container">
                     <div class="table-header">
-                        <h2>Recent Orders</h2>
-                        <a href="orders.html" class="btn-primary" style="background: transparent; color: var(--primary); border: 1px solid var(--primary);">View All</a>
+                        <h2>All Orders</h2>
                     </div>
                     <table>
                         <thead>
@@ -69,11 +49,12 @@
                                 <th>Date</th>
                                 <th>Amount</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="5" style="text-align: center; padding: 2rem; color: #64748b;">No recent orders.</td>
+                                <td colspan="6" style="text-align: center; padding: 2rem; color: #64748b;">No orders found.</td>
                             </tr>
                         </tbody>
                     </table>
