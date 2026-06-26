@@ -148,7 +148,7 @@ export default function AddProduct() {
           </div>
 
           <div style={{marginTop: '2rem', display: 'flex', gap: '1rem'}}>
-            <button type="submit" disabled={loading} style={{padding: '0.8rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer'}}>
+            <button type="submit" disabled={loading} style={{padding: '0.8rem 1.5rem', background: 'var(--primary)', color: 'var(--primary-text)', border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer'}}>
               {loading ? 'Saving...' : 'Save Product'}
             </button>
             <button type="button" onClick={() => navigate('/products')} style={{padding: '0.8rem 1.5rem', background: 'transparent', color: 'var(--text-main)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', fontWeight: '600', cursor: 'pointer'}}>

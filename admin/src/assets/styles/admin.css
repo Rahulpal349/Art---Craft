@@ -2,9 +2,10 @@
 
 :root {
     /* Common palette */
-    --primary: #4A7FA5;      /* Storefront Slate Blue */
-    --primary-dark: #1E3A5F; /* Storefront Deep Navy */
-    --accent: #A8D5EA;       /* Storefront Sky Tint */
+    --primary: #a9d3e9;      /* Light Blue Tone */
+    --primary-dark: #8abfd9; /* Slightly darker */
+    --accent: #d4eaf5;       /* Very light */
+    --primary-text: #1a2b3c; /* Dark text for primary buttons */
     
     --success: #22C55E;
     --danger: #EF4444;
@@ -472,7 +473,7 @@ body {
 
 .login-box button {
     background: var(--primary);
-    color: white;
+    color: var(--primary-text);
     width: 100%;
     padding: 0.85rem;
     border: none;

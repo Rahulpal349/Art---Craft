@@ -72,7 +72,7 @@ export default function Products() {
             <h1>Products</h1>
             <p>Manage your store inventory.</p>
         </div>
-        <Link to="/products/new" style={{textDecoration: 'none', padding: '0.8rem 1.5rem', background: 'var(--primary)', color: 'white', borderRadius: 'var(--radius-sm)', fontWeight: '600'}}>
+        <Link to="/products/new" style={{textDecoration: 'none', padding: '0.8rem 1.5rem', background: 'var(--primary)', color: 'var(--primary-text)', borderRadius: 'var(--radius-sm)', fontWeight: '600'}}>
           + Add Product
         </Link>
       </div>
