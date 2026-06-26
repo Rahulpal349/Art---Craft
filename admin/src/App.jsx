@@ -10,6 +10,7 @@ import './assets/styles/admin.css';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
+import EditProduct from './pages/EditProduct';
 import Orders from './pages/Orders';
 import Customers from './pages/Customers';
 import Reviews from './pages/Reviews';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
             <Route path="/products/new" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+            <Route path="/products/edit/:id" element={<ProtectedRoute><EditProduct /></ProtectedRoute>} />
             <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
             <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
             <Route path="/reviews" element={<ProtectedRoute><Reviews /></ProtectedRoute>} />

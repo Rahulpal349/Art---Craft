@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { supabase } from '../lib/supabase';
 
 const SLIDES = [
   {
@@ -8,7 +9,7 @@ const SLIDES = [
     title: "The Quiet Luxury of Hand-Made",
     description: "Crafted with Soul, Shipped with Love. Discover our curated sanctuary for master craftsmanship.",
     buttons: [
-      { text: "Shop Now", link: "/collections", primary: true },
+      { text: "Shop Now", link: "/shop", primary: true },
       { text: "Our Story", link: "/about", primary: false }
     ]
   },
@@ -17,7 +18,7 @@ const SLIDES = [
     title: "Timeless Ceramic Art",
     description: "Elevate your space with our unique, wheel-thrown ceramic collections.",
     buttons: [
-      { text: "Explore Ceramics", link: "/collections", primary: true }
+      { text: "Explore Ceramics", link: "/shop", primary: true }
     ]
   },
   {
@@ -25,7 +26,7 @@ const SLIDES = [
     title: "Sustainable Living",
     description: "Ethically sourced materials designed for the modern eco-conscious home.",
     buttons: [
-      { text: "Shop Eco", link: "/collections", primary: true }
+      { text: "Shop Eco", link: "/shop", primary: true }
     ]
   },
   {
@@ -33,7 +34,7 @@ const SLIDES = [
     title: "Bespoke Furniture",
     description: "Custom-crafted pieces that tell a story in every grain of wood.",
     buttons: [
-      { text: "View Collection", link: "/collections", primary: true },
+      { text: "View Collection", link: "/shop", primary: true },
       { text: "Custom Order", link: "/contact", primary: false }
     ]
   }
@@ -43,17 +44,38 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { addToCart } = useCart();
   const [addingId, setAddingId] = useState(null);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
 
-  const FEATURED_PRODUCTS = [
-    { id: 1, name: "Indigo Glaze Vase", price: 1240, image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=600&auto=format&fit=crop" },
-    { id: 2, name: "Linen Throw Blanket", price: 2185, image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=600&auto=format&fit=crop" },
-    { id: 3, name: "Walnut Wood Platter", price: 850, image: "https://images.unsplash.com/photo-1604578762246-41134e37f9cc?q=80&w=600&auto=format&fit=crop" }
-  ];
+  useEffect(() => {
+    async function fetchFeatured() {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('is_published', true)
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      if (!error && data) {
+        setFeaturedProducts(data);
+      }
+    }
+    fetchFeatured();
+  }, []);
 
   const handleAddToCart = (product) => {
     addToCart(product);
     setAddingId(product.id);
     setTimeout(() => setAddingId(null), 800);
+  };
+
+  const getProductImage = (product) => {
+    if (product.images && product.images.length > 0) return product.images[0];
+    if (product.image) return product.image;
+    return 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=600&auto=format&fit=crop';
+  };
+
+  const getProductPrice = (product) => {
+    return product.offer_price || product.regular_price || product.price || 0;
   };
 
   useEffect(() => {
@@ -124,36 +146,44 @@ export default function Home() {
           </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="section">
-          <div className="section-header">
-              <h2>Featured Collections</h2>
-              <p>Our most beloved artisanal artifacts</p>
-          </div>
-          <div className="product-grid">
-              {FEATURED_PRODUCTS.map((product) => (
-                <div className="product-card" key={product.id}>
-                    <div className="product-img">
-                        <Link to={`/product/${product.id}`} style={{ display: 'block', width: '100%', height: '100%' }}>
-                          <img src={product.image} alt={product.name} />
-                        </Link>
+      {/* Featured Products - Real Data from Supabase */}
+      {featuredProducts.length > 0 && (
+        <section className="section">
+            <div className="section-header">
+                <h2>Featured Collections</h2>
+                <p>Our most beloved artisanal artifacts</p>
+            </div>
+            <div className="product-grid">
+                {featuredProducts.map((product) => {
+                  const img = getProductImage(product);
+                  const price = getProductPrice(product);
+                  
+                  return (
+                    <div className="product-card" key={product.id}>
+                        <div className="product-img">
+                            <Link to={`/product/${product.id}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                              <img src={img} alt={product.name} />
+                            </Link>
+                        </div>
+                        <div className="product-info">
+                            <h3><Link to={`/product/${product.id}`} style={{textDecoration:'none', color:'inherit'}}>{product.name}</Link></h3>
+                            {product.category && <p style={{fontSize: '0.8rem', color: '#888', margin: '0 0 0.25rem', textTransform: 'uppercase', letterSpacing: '0.5px'}}>{product.category}</p>}
+                            <p className="product-price">₹{price.toFixed ? price.toFixed(2) : price}</p>
+                            <button 
+                                className={`btn btn-primary ${addingId === product.id ? 'btn-added' : ''}`} 
+                                style={{ width: "100%", transition: "all 0.3s ease" }}
+                                onClick={() => handleAddToCart(product)}
+                                disabled={addingId === product.id}
+                            >
+                                {addingId === product.id ? 'Added!' : 'Add to Cart'}
+                            </button>
+                        </div>
                     </div>
-                    <div className="product-info">
-                        <h3><Link to={`/product/${product.id}`} style={{textDecoration:'none', color:'inherit'}}>{product.name}</Link></h3>
-                        <p className="product-price">₹{product.price.toFixed(2)}</p>
-                        <button 
-                            className={`btn btn-primary ${addingId === product.id ? 'btn-added' : ''}`} 
-                            style={{ width: "100%", transition: "all 0.3s ease" }}
-                            onClick={() => handleAddToCart(product)}
-                            disabled={addingId === product.id}
-                        >
-                            {addingId === product.id ? 'Added!' : 'Add to Cart'}
-                        </button>
-                    </div>
-                </div>
-              ))}
-          </div>
-      </section>
+                  );
+                })}
+            </div>
+        </section>
+      )}
     </>
   );
 }

@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function AddProduct() {
+export default function EditProduct() {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
-  const [imageFiles, setImageFiles] = useState([]);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -19,6 +20,33 @@ export default function AddProduct() {
     is_published: false
   });
 
+  useEffect(() => {
+    async function fetchProduct() {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error || !data) {
+        setError('Product not found');
+      } else {
+        setFormData({
+          name: data.name || '',
+          description: data.description || '',
+          price: data.price?.toString() || '',
+          regular_price: data.regular_price?.toString() || '',
+          offer_price: data.offer_price?.toString() || '',
+          category: data.category || '',
+          stock: data.stock?.toString() || '0',
+          is_published: data.is_published || false
+        });
+      }
+      setLoading(false);
+    }
+    fetchProduct();
+  }, [id]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
@@ -27,45 +55,13 @@ export default function AddProduct() {
     }));
   };
 
-  const handleImageChange = (e) => {
-    if (e.target.files) {
-      const files = Array.from(e.target.files).slice(0, 5);
-      setImageFiles(files);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setSaving(true);
     setError(null);
 
     try {
-      // 1. Upload Images (optional — skip gracefully if storage fails)
-      const imageUrls = [];
-      for (const file of imageFiles) {
-        try {
-          const fileExt = file.name.split('.').pop();
-          const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-
-          const { error: uploadError } = await supabase.storage
-            .from('product-images')
-            .upload(fileName, file);
-
-          if (!uploadError) {
-            const { data: publicUrlData } = supabase.storage
-              .from('product-images')
-              .getPublicUrl(fileName);
-            imageUrls.push(publicUrlData.publicUrl);
-          } else {
-            console.warn('Image upload skipped:', uploadError.message);
-          }
-        } catch (imgErr) {
-          console.warn('Image upload failed, skipping:', imgErr.message);
-        }
-      }
-
-      // 2. Insert Product
-      const product = {
+      const updates = {
         name: formData.name,
         description: formData.description || null,
         price: parseFloat(formData.price || formData.regular_price),
@@ -73,31 +69,32 @@ export default function AddProduct() {
         offer_price: formData.offer_price ? parseFloat(formData.offer_price) : null,
         category: formData.category || null,
         stock: parseInt(formData.stock, 10),
-        is_published: formData.is_published,
-        image: imageUrls[0] || null,
-        images: imageUrls
+        is_published: formData.is_published
       };
 
-      const { error: insertError } = await supabase
+      const { error: updateError } = await supabase
         .from('products')
-        .insert([product]);
+        .update(updates)
+        .eq('id', id);
 
-      if (insertError) throw insertError;
+      if (updateError) throw updateError;
 
       navigate('/products');
     } catch (err) {
-      console.error('Product save error:', err);
-      setError(err.message || 'An error occurred. Check your Supabase tables.');
+      console.error('Update error:', err);
+      setError(err.message || 'Failed to update product.');
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) return <div className="dashboard-content"><p>Loading product...</p></div>;
 
   return (
     <div className="dashboard-content">
       <div className="page-header" style={{marginBottom: '2rem'}}>
-        <h1>Add New Product</h1>
-        <p>Create a new product listing in your store.</p>
+        <h1>Edit Product</h1>
+        <p>Update product details.</p>
       </div>
 
       {error && <div style={{padding: '1rem', background: 'var(--danger)', color: 'white', borderRadius: 'var(--radius-sm)', marginBottom: '1rem'}}>{error}</div>}
@@ -134,22 +131,14 @@ export default function AddProduct() {
             </div>
           </div>
 
-          <div className="form-group" style={{display: 'flex', flexDirection: 'column', marginBottom: '1.5rem'}}>
-            <label style={{marginBottom: '0.5rem', color: 'var(--text-muted)'}}>Product Images (Up to 5)</label>
-            <input type="file" multiple accept="image/*" onChange={handleImageChange} style={{border: 'none', padding: 0, color: 'var(--text-main)'}} />
-            <div style={{fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem'}}>
-              {imageFiles.length} file(s) selected
-            </div>
-          </div>
-
           <div className="form-group" style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem'}}>
             <input type="checkbox" name="is_published" checked={formData.is_published} onChange={handleChange} style={{width: 'auto', marginBottom: 0}} />
-            <label style={{marginBottom: 0, color: 'var(--text-main)'}}>Publish to store immediately</label>
+            <label style={{marginBottom: 0, color: 'var(--text-main)'}}>Published</label>
           </div>
 
           <div style={{marginTop: '2rem', display: 'flex', gap: '1rem'}}>
-            <button type="submit" disabled={loading} style={{padding: '0.8rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer'}}>
-              {loading ? 'Saving...' : 'Save Product'}
+            <button type="submit" disabled={saving} style={{padding: '0.8rem 1.5rem', background: 'var(--primary)', color: 'white', border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: '600', cursor: saving ? 'not-allowed' : 'pointer'}}>
+              {saving ? 'Saving...' : 'Update Product'}
             </button>
             <button type="button" onClick={() => navigate('/products')} style={{padding: '0.8rem 1.5rem', background: 'transparent', color: 'var(--text-main)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', fontWeight: '600', cursor: 'pointer'}}>
               Cancel
