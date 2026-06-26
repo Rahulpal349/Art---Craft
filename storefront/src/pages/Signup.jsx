@@ -1,17 +1,29 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthLayout from '../components/AuthLayout';
+import { useAuth } from '../context/AuthContext';
 
 export default function Signup() {
   const navigate = useNavigate();
+  const { signup } = useAuth();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const nameInput = document.getElementById('name').value;
-    // Fake sign up logic
-    localStorage.setItem('isAuthenticated', 'true');
-    localStorage.setItem('userName', nameInput || 'Artisan');
-    // Navigate to User Dashboard (Curator Portal)
-    navigate('/dashboard');
+    setLoading(true);
+    setError(null);
+    
+    const { success, error: signupError } = await signup(email, password, name);
+    if (success) {
+      navigate('/dashboard');
+    } else {
+      setError(signupError || 'Signup failed');
+      setLoading(false);
+    }
   };
 
   return (
@@ -22,24 +34,49 @@ export default function Signup() {
       </p>
 
       <form onSubmit={handleSignup}>
+        {error && <div style={{ color: 'red', marginBottom: '1rem', fontSize: '0.9rem' }}>{error}</div>}
         <div className="auth-form-group">
           <label htmlFor="name">Full Name</label>
           <div className="auth-input-wrapper">
-            <input type="text" id="name" className="auth-input" placeholder="Your Name" required />
+            <input 
+              type="text" 
+              id="name" 
+              className="auth-input" 
+              placeholder="Your Name" 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required 
+            />
           </div>
         </div>
 
         <div className="auth-form-group">
           <label htmlFor="email">Email</label>
           <div className="auth-input-wrapper">
-            <input type="email" id="email" className="auth-input" placeholder="your@email.com" required />
+            <input 
+              type="email" 
+              id="email" 
+              className="auth-input" 
+              placeholder="your@email.com" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
+            />
           </div>
         </div>
 
         <div className="auth-form-group">
           <label htmlFor="password">Password</label>
           <div className="auth-input-wrapper">
-            <input type="password" id="password" className="auth-input" placeholder="••••••••" required />
+            <input 
+              type="password" 
+              id="password" 
+              className="auth-input" 
+              placeholder="••••••••" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required 
+            />
             <span className="auth-input-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </span>
@@ -53,7 +90,9 @@ export default function Signup() {
           </div>
         </div>
 
-        <button type="submit" className="auth-btn">Sign Up</button>
+        <button type="submit" className="auth-btn" disabled={loading}>
+          {loading ? 'Signing up...' : 'Sign Up'}
+        </button>
 
         <div className="auth-divider">OR</div>
 

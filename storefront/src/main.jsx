@@ -1,9 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
+import './assets/styles/index.css'
+import './assets/styles/App.css'
+import './assets/styles/style.css'
 import App from './App.jsx'
-import './style.css' // Import legacy global CSS
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,

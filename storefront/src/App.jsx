@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
-import './pages.css';
+import './assets/styles/pages.css';
 import { CartProvider } from './context/CartContext';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
@@ -16,13 +16,15 @@ import Terms from './pages/Terms';
 import CorporateOrders from './pages/CorporateOrders';
 import FAQ from './pages/FAQ';
 import UserDashboard from './pages/UserDashboard';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-      <Routes>
-        <Route element={<MainLayout />}>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+        <Routes>
+          <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/collections" element={<Shop />} />
           <Route path="/about" element={<About />} />
@@ -42,6 +44,7 @@ function App() {
       </Routes>
     </Router>
     </CartProvider>
+    </AuthProvider>
   );
 }
 

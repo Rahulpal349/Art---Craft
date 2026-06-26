@@ -22,9 +22,6 @@ export default function Login() {
     setLoading(true);
     setError(null);
     
-    // Simulate slight network delay for animation feel
-    await new Promise(r => setTimeout(r, 600));
-    
     const { success, error: loginError } = await login(email, password);
     if (success) {
       navigate('/');

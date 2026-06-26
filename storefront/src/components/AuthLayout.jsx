@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import '../auth.css';
+import '../assets/styles/auth.css';
 
 export default function AuthLayout({ children }) {
   return (

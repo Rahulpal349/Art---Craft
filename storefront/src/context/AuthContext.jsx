@@ -52,13 +52,35 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const signup = async (email, password, name) => {
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name: name
+          }
+        }
+      });
+
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true };
+    } catch (err) {
+      console.error(err);
+      return { success: false, error: 'Network error. Make sure you are connected.' };
+    }
+  };
+
   const logout = async () => {
-    localStorage.removeItem('adminToken');
     await supabase.auth.signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

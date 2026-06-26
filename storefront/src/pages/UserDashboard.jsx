@@ -1,15 +1,21 @@
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useEffect } from 'react';
 
 export default function UserDashboard() {
-  const [userName, setUserName] = useState('Artisan');
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
+  // Redirect to login if no user is found
   useEffect(() => {
-    const storedName = localStorage.getItem('userName');
-    if (storedName) {
-      setUserName(storedName);
+    if (!user) {
+      navigate('/login');
     }
-  }, []);
+  }, [user, navigate]);
+
+  if (!user) return null;
+
+  const userName = user.name || user.email?.split('@')[0] || 'Artisan';
 
   return (
     <div className="dashboard-layout" style={{ display: 'grid', gridTemplateColumns: '240px 1fr', minHeight: 'calc(100vh - 80px)' }}>
@@ -49,10 +55,9 @@ export default function UserDashboard() {
             Settings
           </Link>
           <button 
-            onClick={() => {
-              localStorage.removeItem('isAuthenticated');
-              localStorage.removeItem('userName');
-              window.location.href = '/login';
+            onClick={async () => {
+              await logout();
+              navigate('/login');
             }} 
             style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', color: '#ef4444', textDecoration: 'none', fontSize: '0.9rem', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', width: '100%', textAlign: 'left', marginTop: 'auto' }}
           >
