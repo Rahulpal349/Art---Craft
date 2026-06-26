@@ -24,6 +24,7 @@ import Orders from './pages/Orders';
 import Customers from './pages/Customers';
 import Reviews from './pages/Reviews';
 import Analytics from './pages/Analytics';
+import Login from './pages/Login';
 
 const ThemeContext = createContext();
 
@@ -67,11 +68,11 @@ function Sidebar() {
     <aside className="sidebar">
         <div className="sidebar-profile">
             <div className="avatar">
-                {user?.username ? user.username.substring(0, 2).toUpperCase() : 'JD'}
+                {user?.name ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : (user?.username ? user.username.substring(0, 2).toUpperCase() : 'RP')}
             </div>
             <div className="user-info">
                 <span className="role">Admin</span>
-                <span className="name">{user?.username || 'Jayita Das'}</span>
+                <span className="name">{user?.name || user?.username || 'Rahul Pal'}</span>
             </div>
         </div>
         
@@ -100,40 +101,6 @@ function Sidebar() {
             </button>
         </div>
     </aside>
-  );
-}
-
-function Login() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const success = await login(username, password);
-    if (success) {
-      navigate('/');
-    }
-  };
-
-  return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>Admin Portal</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Username</label>
-            <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
-          </div>
-          <div>
-            <label>Password</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-          </div>
-          <button type="submit">Sign In</button>
-        </form>
-      </div>
-    </div>
   );
 }
 

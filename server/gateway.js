@@ -3,11 +3,16 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const jwt = require('jsonwebtoken');
+const { createClient } = require('@supabase/supabase-js');
+
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://jsurpluwwqrujaohbatc.supabase.co';
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'sb_publishable_gBq5FXF-Q7VQ61yY9pXXDA_wR31BUwA';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const activeSessions = new Map(); // userId -> Set of session tokens
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET || 'art-and-craft-super-secret-key-2024';
 
 // ==========================================
 // 1. SECURITY & LOAD BALANCER MIDDLEWARE
@@ -41,37 +46,74 @@ app.use('/api/', apiLimiter);
 // 2. SECURITY ROUTE MAPPING (AUTH)
 // ==========================================
 
-// Middleware to verify JWT token for secure admin routes
-const requireAdminAuth = (req, res, next) => {
+// (Unused) Middleware for local admin routes if needed in the future
+const requireAdminAuth = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Format: "Bearer TOKEN"
+  const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
     return res.status(401).json({ error: 'Access Denied: No Token Provided' });
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    if (decoded.role !== 'admin') {
-      return res.status(403).json({ error: 'Forbidden: Admin access required' });
+    const { data, error } = await supabase.auth.getUser(token);
+    if (error || !data.user) {
+      return res.status(403).json({ error: 'Forbidden: Invalid Token' });
     }
-    req.user = decoded;
+    req.user = data.user;
     next();
   } catch (err) {
-    return res.status(403).json({ error: 'Forbidden: Invalid or Expired Token' });
+    return res.status(403).json({ error: 'Forbidden' });
   }
 };
 
 // Example Authentication Route (Login to get token)
-// Note: In a real app, you'd check a database. For now, we mock it.
-app.post('/api/auth/login', express.json(), (req, res) => {
-  const { username, password } = req.body;
-  // Mock verification
-  if (username === 'admin' && password === 'admin123') {
-    const token = jwt.sign({ username: 'admin', role: 'admin' }, JWT_SECRET, { expiresIn: '8h' });
-    return res.json({ token, role: 'admin' });
+app.post('/api/auth/login', express.json(), async (req, res) => {
+  const { email, password } = req.body;
+  
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      return res.status(401).json({ error: error.message });
+    }
+
+    const userId = data.user.id;
+
+    if (!activeSessions.has(userId)) {
+      activeSessions.set(userId, new Set());
+    }
+
+    const userSessions = activeSessions.get(userId);
+
+    // Limit to 2 concurrent sessions
+    if (userSessions.size >= 2) {
+      return res.status(403).json({ error: 'Maximum of 2 concurrent sessions allowed. Please log out from another device first.' });
+    }
+
+    // Add this new session
+    userSessions.add(data.session.access_token);
+
+    return res.json({ 
+      session: data.session,
+      user: data.user
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
-  return res.status(401).json({ error: 'Invalid credentials' });
+});
+
+// Logout route to free up a session slot
+app.post('/api/auth/logout', express.json(), (req, res) => {
+  const { userId, token } = req.body;
+  if (userId && token && activeSessions.has(userId)) {
+    activeSessions.get(userId).delete(token);
+  }
+  return res.json({ success: true });
 });
 
 // ==========================================
