@@ -1,70 +1,105 @@
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { useState } from 'react';
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  Store,
+  Users,
+  Star,
+  BarChart,
+  Image as ImageIcon,
+  Moon,
+  Sun,
+  LogOut,
+} from 'lucide-react';
+import './admin.css';
+
+// Import Pages
+import Dashboard from './pages/Dashboard';
+import Products from './pages/Products';
+import AddProduct from './pages/AddProduct';
+import Orders from './pages/Orders';
+import Customers from './pages/Customers';
+import Reviews from './pages/Reviews';
+import Analytics from './pages/Analytics';
+
+const ThemeContext = createContext();
+
+function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('dark');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(t => t === 'dark' ? 'light' : 'dark');
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+function useTheme() {
+  return useContext(ThemeContext);
+}
 
 function Sidebar() {
+  const { theme, toggleTheme } = useTheme();
+  const { logout, user } = useAuth();
+  const location = useLocation();
+
+  const navItems = [
+    { name: 'Dashboard', path: '/', icon: LayoutDashboard },
+    { name: 'Products', path: '/products', icon: Package },
+    { name: 'Orders', path: '/orders', icon: ShoppingCart },
+    { name: 'Customers', path: '/customers', icon: Users },
+    { name: 'Reviews', path: '/reviews', icon: Star },
+    { name: 'Analytics', path: '/analytics', icon: BarChart },
+  ];
+
   return (
     <aside className="sidebar">
-        <div className="sidebar-logo">
-            <img src="/assets/images/logo.svg" alt="Logo" style={{height:"24px", verticalAlign:"middle", marginRight:"8px"}} />
-            Art & Craft Admin
+        <div className="sidebar-profile">
+            <div className="avatar">
+                {user?.username ? user.username.substring(0, 2).toUpperCase() : 'JD'}
+            </div>
+            <div className="user-info">
+                <span className="role">Admin</span>
+                <span className="name">{user?.username || 'Jayita Das'}</span>
+            </div>
         </div>
+        
         <ul className="nav-menu">
-            <li className="nav-item">
-                <Link to="/" className="nav-link active">Dashboard</Link>
-            </li>
-            <li className="nav-item">
-                <Link to="/products" className="nav-link">Products</Link>
-            </li>
-            <li className="nav-item">
-                <Link to="/orders" className="nav-link">Orders</Link>
-            </li>
-            <li className="nav-item">
-                <Link to="/customers" className="nav-link">Customers</Link>
-            </li>
+            {navItems.map(item => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path || (location.pathname.startsWith(item.path) && item.path !== '/');
+              return (
+                <li className="nav-item" key={item.path}>
+                    <Link to={item.path} className={isActive ? "active" : ""}>
+                        <Icon size={20} />
+                        {item.name}
+                    </Link>
+                </li>
+              );
+            })}
         </ul>
+
+        <div className="bottom-actions">
+            <button className="btn-darkmode" onClick={toggleTheme}>
+                {theme === 'dark' ? <><Sun size={20} /> Light Mode</> : <><Moon size={20} /> Dark Mode</>}
+            </button>
+            <button className="btn-signout" onClick={logout}>
+                <LogOut size={20} />
+                Sign Out
+            </button>
+        </div>
     </aside>
-  );
-}
-
-function Topbar() {
-  const { logout, user } = useAuth();
-  return (
-    <header className="topbar">
-        <div className="search-bar">
-            <input type="text" placeholder="Search anything..." />
-        </div>
-        <div className="topbar-actions">
-            <span>{user?.username || 'Admin User'}</span>
-            <button onClick={logout} className="btn btn-primary" style={{padding: "8px 16px", background: 'transparent', border: '1px solid var(--primary)', color: 'var(--primary)'}}>Logout</button>
-        </div>
-    </header>
-  );
-}
-
-function Dashboard() {
-  return (
-    <div>
-        <div className="header-actions">
-            <h1>Dashboard</h1>
-            <button className="btn btn-primary">+ Add Product</button>
-        </div>
-
-        <div className="stats-grid">
-            <div className="stat-card">
-                <div className="stat-value">₹1,24,500</div>
-                <div className="stat-label">Total Revenue</div>
-            </div>
-            <div className="stat-card">
-                <div className="stat-value">48</div>
-                <div className="stat-label">Orders (This Month)</div>
-            </div>
-            <div className="stat-card">
-                <div className="stat-value">12</div>
-                <div className="stat-label">Active Products</div>
-            </div>
-        </div>
-    </div>
   );
 }
 
@@ -83,19 +118,19 @@ function Login() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', background: '#f8fafc' }}>
-      <div style={{ background: 'white', padding: '3rem', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', width: '100%', maxWidth: '400px' }}>
-        <h2 style={{ marginBottom: '2rem', textAlign: 'center', color: '#1e3a8a' }}>Admin Portal</h2>
+    <div className="login-container">
+      <div className="login-box">
+        <h2>Admin Portal</h2>
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Username</label>
-            <input type="text" value={username} onChange={e => setUsername(e.target.value)} style={{ width: '100%', padding: '0.75rem', border: '1px solid #cbd5e1', borderRadius: '4px' }} />
+          <div>
+            <label>Username</label>
+            <input type="text" value={username} onChange={e => setUsername(e.target.value)} />
           </div>
-          <div style={{ marginBottom: '2rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Password</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={{ width: '100%', padding: '0.75rem', border: '1px solid #cbd5e1', borderRadius: '4px' }} />
+          <div>
+            <label>Password</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
           </div>
-          <button type="submit" className="btn btn-primary" style={{ width: '100%', background: '#1e3a8a', color: 'white', padding: '1rem', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Sign In</button>
+          <button type="submit">Sign In</button>
         </form>
       </div>
     </div>
@@ -112,10 +147,7 @@ function ProtectedRoute({ children }) {
     <div className="admin-layout">
       <Sidebar />
       <main className="main-content">
-        <Topbar />
-        <div className="content-area">
-          {children}
-        </div>
+        {children}
       </main>
     </div>
   );
@@ -123,17 +155,22 @@ function ProtectedRoute({ children }) {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/products" element={<ProtectedRoute><div><h2>Products</h2><p>Coming Soon</p></div></ProtectedRoute>} />
-          <Route path="/orders" element={<ProtectedRoute><div><h2>Orders</h2><p>Coming Soon</p></div></ProtectedRoute>} />
-          <Route path="/customers" element={<ProtectedRoute><div><h2>Customers</h2><p>Coming Soon</p></div></ProtectedRoute>} />
-        </Routes>
-      </Router>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
+            <Route path="/products/new" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
+            <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+            <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+            <Route path="/reviews" element={<ProtectedRoute><Reviews /></ProtectedRoute>} />
+            <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
