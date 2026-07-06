@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { supabase } from '../lib/supabase';
+import { api } from '../lib/api';
 
 const SLIDES = [
   {
@@ -48,15 +48,11 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchFeatured() {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('is_published', true)
-        .order('created_at', { ascending: false })
-        .limit(3);
-
-      if (!error && data) {
-        setFeaturedProducts(data);
+      try {
+        const data = await api.get('/products?published=true');
+        setFeaturedProducts(data.slice(0, 3));
+      } catch (err) {
+        console.error('Failed to fetch featured products:', err);
       }
     }
     fetchFeatured();

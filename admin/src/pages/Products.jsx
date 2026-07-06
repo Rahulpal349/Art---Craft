@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { api } from '../lib/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Pencil, Trash2, Package, Eye, EyeOff } from 'lucide-react';
 
@@ -10,13 +10,11 @@ export default function Products() {
   const navigate = useNavigate();
 
   const fetchProducts = async () => {
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: false });
-      
-    if (!error && data) {
+    try {
+      const data = await api.get('/products');
       setProducts(data);
+    } catch (err) {
+      console.error('Failed to fetch products:', err);
     }
     setLoading(false);
   };
@@ -29,29 +27,23 @@ export default function Products() {
     if (!window.confirm(`Delete "${product.name}"? This cannot be undone.`)) return;
     
     setDeleting(product.id);
-    const { error } = await supabase
-      .from('products')
-      .delete()
-      .eq('id', product.id);
-
-    if (!error) {
+    try {
+      await api.delete(`/products/${product.id}`);
       setProducts(prev => prev.filter(p => p.id !== product.id));
-    } else {
-      alert('Failed to delete: ' + error.message);
+    } catch (err) {
+      alert('Failed to delete: ' + err.message);
     }
     setDeleting(null);
   };
 
   const togglePublish = async (product) => {
-    const { error } = await supabase
-      .from('products')
-      .update({ is_published: !product.is_published })
-      .eq('id', product.id);
-
-    if (!error) {
-      setProducts(prev => prev.map(p => 
+    try {
+      await api.put(`/products/${product.id}`, { is_published: !product.is_published });
+      setProducts(prev => prev.map(p =>
         p.id === product.id ? { ...p, is_published: !p.is_published } : p
       ));
+    } catch (err) {
+      alert('Failed to update: ' + err.message);
     }
   };
 

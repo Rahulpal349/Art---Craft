@@ -1,5 +1,11 @@
+/**
+ * AuthContext.jsx (Storefront)
+ *
+ * Replaces supabase.auth.* with calls to our AWS API Gateway → Cognito Lambda.
+ * Supports login, signup, and logout for storefront customers.
+ */
 import { createContext, useState, useContext, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { api, tokenStore } from '../lib/api';
 
 const AuthContext = createContext();
 
@@ -8,75 +14,65 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Automatically get the session on load
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setUser({ ...session.user.user_metadata, id: session.user.id });
-      }
+    const token = tokenStore.get();
+    if (!token) {
       setLoading(false);
-    });
+      return;
+    }
 
-    // Listen for auth state changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (session) {
-          setUser({ ...session.user.user_metadata, id: session.user.id });
-        } else {
-          setUser(null);
-        }
-      }
-    );
-
-    return () => {
-      if (authListener && authListener.subscription) {
-        authListener.subscription.unsubscribe();
-      }
-    };
+    api.get('/auth/session')
+      .then((data) => setUser(data))
+      .catch(() => {
+        tokenStore.clear();
+        setUser(null);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
+  /**
+   * Customer login via Cognito.
+   */
   const login = async (email, password) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+      const data = await api.post('/auth/login', { email, password });
 
-      if (error) {
-        return { success: false, error: error.message };
-      }
+      tokenStore.set(data.accessToken);
+      localStorage.setItem('idToken',      data.idToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+
+      const profile = await api.get('/auth/session');
+      setUser(profile);
 
       return { success: true };
     } catch (err) {
-      console.error(err);
-      return { success: false, error: 'Network error. Make sure you are connected.' };
+      return { success: false, error: err.message };
     }
   };
 
+  /**
+   * New customer signup via Cognito.
+   * Cognito sends a verification email automatically.
+   */
   const signup = async (email, password, name) => {
     try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            name: name
-          }
-        }
-      });
-
-      if (error) {
-        return { success: false, error: error.message };
-      }
-
-      return { success: true };
+      const data = await api.post('/auth/signup', { email, password, name });
+      return { success: true, message: data.message };
     } catch (err) {
-      console.error(err);
-      return { success: false, error: 'Network error. Make sure you are connected.' };
+      return { success: false, error: err.message };
     }
   };
 
+  /**
+   * Logout — invalidates Cognito session + clears local tokens.
+   */
   const logout = async () => {
-    await supabase.auth.signOut();
+    try {
+      await api.post('/auth/logout', {});
+    } catch {
+      // Swallow
+    }
+    tokenStore.clear();
+    setUser(null);
   };
 
   return (

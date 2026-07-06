@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { api } from '../lib/api';
 import { useNavigate, useParams } from 'react-router-dom';
 
 export default function EditProduct() {
@@ -22,15 +22,8 @@ export default function EditProduct() {
 
   useEffect(() => {
     async function fetchProduct() {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (error || !data) {
-        setError('Product not found');
-      } else {
+      try {
+        const data = await api.get(`/products/${id}`);
         setFormData({
           name: data.name || '',
           description: data.description || '',
@@ -41,6 +34,8 @@ export default function EditProduct() {
           stock: data.stock?.toString() || '0',
           is_published: data.is_published || false
         });
+      } catch (err) {
+        setError('Product not found');
       }
       setLoading(false);
     }
@@ -72,13 +67,7 @@ export default function EditProduct() {
         is_published: formData.is_published
       };
 
-      const { error: updateError } = await supabase
-        .from('products')
-        .update(updates)
-        .eq('id', id);
-
-      if (updateError) throw updateError;
-
+      await api.put(`/products/${id}`, updates);
       navigate('/products');
     } catch (err) {
       console.error('Update error:', err);

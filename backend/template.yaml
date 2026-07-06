@@ -1,0 +1,277 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Art & Craft E-commerce - AWS Serverless Backend
+
+Globals:
+  Function:
+    Runtime: nodejs20.x
+    Timeout: 30
+    MemorySize: 256
+    Environment:
+      Variables:
+        DB_SECRET_ARN: !Ref DBSecret
+        S3_BUCKET: !Ref ProductImagesBucket
+        COGNITO_USER_POOL_ID: !Ref UserPool
+        COGNITO_CLIENT_ID: !Ref UserPoolClient
+        REGION: !Ref AWS::Region
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, prod]
+  DBUsername:
+    Type: String
+    Default: artcraft_admin
+    NoEcho: true
+  DBPassword:
+    Type: String
+    NoEcho: true
+    MinLength: 8
+    Default: ArtCraft2026!
+
+Resources:
+
+  # ─────────────────────────────────────────────────────
+  # API GATEWAY
+  # ─────────────────────────────────────────────────────
+  ArtCraftApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: !Ref Environment
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowHeaders:
+          - Content-Type
+          - Authorization
+          - X-Amz-Date
+          - X-Api-Key
+        AllowMethods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - OPTIONS
+
+  # ─────────────────────────────────────────────────────
+  # LAMBDA — PRODUCTS CRUD
+  # ─────────────────────────────────────────────────────
+  ProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: handlers/products.handler
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Ref DBSecret
+      Events:
+        GetProducts:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /products
+            Method: GET
+        GetProductById:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /products/{id}
+            Method: GET
+        GetProductCount:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /products/count
+            Method: GET
+        CreateProduct:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /products
+            Method: POST
+        UpdateProduct:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /products/{id}
+            Method: PUT
+        DeleteProduct:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /products/{id}
+            Method: DELETE
+
+  # ─────────────────────────────────────────────────────
+  # LAMBDA — AUTH
+  # ─────────────────────────────────────────────────────
+  AuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: handlers/auth.handler
+      Events:
+        Login:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /auth/login
+            Method: POST
+        Signup:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /auth/signup
+            Method: POST
+        Logout:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /auth/logout
+            Method: POST
+        GetSession:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /auth/session
+            Method: GET
+
+  # ─────────────────────────────────────────────────────
+  # LAMBDA — S3 PRESIGNED UPLOAD URL
+  # ─────────────────────────────────────────────────────
+  UploadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: handlers/upload.handler
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref ProductImagesBucket
+      Events:
+        GetUploadUrl:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ArtCraftApi
+            Path: /upload/presign
+            Method: POST
+
+  # ─────────────────────────────────────────────────────
+  # COGNITO USER POOL
+  # ─────────────────────────────────────────────────────
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub artcraft-users-${Environment}
+      AutoVerifiedAttributes:
+        - email
+      UsernameAttributes:
+        - email
+      Schema:
+        - Name: name
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: false
+          RequireLowercase: false
+          RequireNumbers: false
+          RequireSymbols: false
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Sub artcraft-client-${Environment}
+      UserPoolId: !Ref UserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_SRP_AUTH
+
+  # ─────────────────────────────────────────────────────
+  # S3 — PRODUCT IMAGES + CLOUDFRONT CDN
+  # ─────────────────────────────────────────────────────
+  ProductImagesBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub artcraft-images-${Environment}-${AWS::AccountId}
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins: ['*']
+            AllowedHeaders: ['*']
+            AllowedMethods: [GET, PUT, POST]
+            MaxAge: 3000
+
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        DefaultCacheBehavior:
+          ViewerProtocolPolicy: redirect-to-https
+          TargetOriginId: S3Origin
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          ForwardedValues:
+            QueryString: false
+        Origins:
+          - Id: S3Origin
+            DomainName: !GetAtt ProductImagesBucket.RegionalDomainName
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOAI}'
+
+  CloudFrontOAI:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Sub artcraft-oai-${Environment}
+
+  ImagesBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ProductImagesBucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOAI.S3CanonicalUserId
+            Action: s3:GetObject
+            Resource: !Sub '${ProductImagesBucket.Arn}/*'
+
+  # ─────────────────────────────────────────────────────
+  # SECRETS MANAGER — DB Credentials
+  # ─────────────────────────────────────────────────────
+  DBSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub artcraft-db-${Environment}
+      SecretString: !Sub |
+        {
+          "username": "${DBUsername}",
+          "password": "${DBPassword}",
+          "host": "YOUR_RDS_ENDPOINT_HERE",
+          "port": 5432,
+          "database": "artcraft"
+        }
+
+# ─────────────────────────────────────────────────────
+# OUTPUTS
+# ─────────────────────────────────────────────────────
+Outputs:
+  ApiBaseUrl:
+    Description: HTTP API base URL - paste this into your .env.local files
+    Value: !Sub 'https://${ArtCraftApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}'
+
+  UserPoolId:
+    Description: Cognito User Pool ID
+    Value: !Ref UserPool
+
+  UserPoolClientId:
+    Description: Cognito App Client ID
+    Value: !Ref UserPoolClient
+
+  CloudFrontDomain:
+    Description: CloudFront domain for images
+    Value: !GetAtt CloudFrontDistribution.DomainName

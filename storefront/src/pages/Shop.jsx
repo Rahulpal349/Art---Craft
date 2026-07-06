@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { supabase } from '../lib/supabase';
+import { api } from '../lib/api';
 
 export default function Shop() {
   const { addToCart } = useCart();
@@ -11,14 +11,11 @@ export default function Shop() {
 
   useEffect(() => {
     async function fetchProducts() {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('is_published', true)
-        .order('created_at', { ascending: false });
-
-      if (!error && data) {
+      try {
+        const data = await api.get('/products?published=true');
         setProducts(data);
+      } catch (err) {
+        console.error('Failed to fetch products:', err);
       }
       setLoading(false);
     }

@@ -1,5 +1,11 @@
+/**
+ * AuthContext.jsx (Admin)
+ *
+ * Replaces supabase.auth.* with calls to our AWS API Gateway → Cognito Lambda.
+ * The API stores tokens in localStorage via tokenStore (api.js).
+ */
 import { createContext, useState, useContext, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { api, tokenStore } from '../lib/api';
 
 const AuthContext = createContext();
 
@@ -7,54 +13,58 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // On mount: restore session if we have a stored token
   useEffect(() => {
-    // Automatically get the session on load
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setUser({ ...session.user.user_metadata, id: session.user.id });
-      }
+    const token = tokenStore.get();
+    if (!token) {
       setLoading(false);
-    });
+      return;
+    }
 
-    // Listen for auth state changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (session) {
-          setUser({ ...session.user.user_metadata, id: session.user.id });
-        } else {
-          setUser(null);
-        }
-      }
-    );
-
-    return () => {
-      if (authListener && authListener.subscription) {
-        authListener.subscription.unsubscribe();
-      }
-    };
+    // Validate the stored token against Cognito via /auth/session
+    api.get('/auth/session')
+      .then((data) => setUser(data))
+      .catch(() => {
+        // Token expired or invalid — clear it
+        tokenStore.clear();
+        setUser(null);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
+  /**
+   * Login with email + password → Cognito USER_PASSWORD_AUTH flow.
+   */
   const login = async (email, password) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+      const data = await api.post('/auth/login', { email, password });
 
-      if (error) {
-        return { success: false, error: error.message };
-      }
+      // Store tokens
+      tokenStore.set(data.accessToken);
+      localStorage.setItem('idToken',      data.idToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+
+      // Fetch user profile
+      const profile = await api.get('/auth/session');
+      setUser(profile);
 
       return { success: true };
     } catch (err) {
-      console.error(err);
-      return { success: false, error: 'Network error. Make sure you are connected.' };
+      return { success: false, error: err.message };
     }
   };
 
+  /**
+   * Logout — invalidates Cognito session + clears local tokens.
+   */
   const logout = async () => {
-    localStorage.removeItem('adminToken');
-    await supabase.auth.signOut();
+    try {
+      await api.post('/auth/logout', {});
+    } catch {
+      // Swallow — clear locally regardless
+    }
+    tokenStore.clear();
+    setUser(null);
   };
 
   return (

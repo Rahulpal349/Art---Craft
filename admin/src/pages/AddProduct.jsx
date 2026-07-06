@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { api } from '../lib/api';
 import { useNavigate } from 'react-router-dom';
 
 export default function AddProduct() {
@@ -40,31 +40,18 @@ export default function AddProduct() {
     setError(null);
 
     try {
-      // 1. Upload Images (optional — skip gracefully if storage fails)
+      // 1. Upload Images to S3 via presigned URLs
       const imageUrls = [];
       for (const file of imageFiles) {
         try {
-          const fileExt = file.name.split('.').pop();
-          const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
-
-          const { error: uploadError } = await supabase.storage
-            .from('product-images')
-            .upload(fileName, file);
-
-          if (!uploadError) {
-            const { data: publicUrlData } = supabase.storage
-              .from('product-images')
-              .getPublicUrl(fileName);
-            imageUrls.push(publicUrlData.publicUrl);
-          } else {
-            console.warn('Image upload skipped:', uploadError.message);
-          }
+          const url = await api.uploadImage(file);
+          imageUrls.push(url);
         } catch (imgErr) {
-          console.warn('Image upload failed, skipping:', imgErr.message);
+          console.warn('Image upload skipped:', imgErr.message);
         }
       }
 
-      // 2. Insert Product
+      // 2. Create Product via API
       const product = {
         name: formData.name,
         description: formData.description || null,
@@ -78,16 +65,11 @@ export default function AddProduct() {
         images: imageUrls
       };
 
-      const { error: insertError } = await supabase
-        .from('products')
-        .insert([product]);
-
-      if (insertError) throw insertError;
-
+      await api.post('/products', product);
       navigate('/products');
     } catch (err) {
       console.error('Product save error:', err);
-      setError(err.message || 'An error occurred. Check your Supabase tables.');
+      setError(err.message || 'An error occurred. Please try again.');
     } finally {
       setLoading(false);
     }

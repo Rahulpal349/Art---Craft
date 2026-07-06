@@ -1,0 +1,22 @@
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.*.local
+.env.migration
+*.env
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build outputs
+dist/
+build/
+
+# AWS
+.aws-sam/
+samconfig.toml
+
+# OS
+.DS_Store
+Thumbs.db

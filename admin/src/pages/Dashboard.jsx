@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { api } from '../lib/api';
 import { Search, TrendingUp, ShoppingCart, Box } from 'lucide-react';
 
 function Topbar() {
@@ -23,16 +23,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function fetchStats() {
-      // Fetch total products
-      const { count, error } = await supabase
-        .from('products')
-        .select('*', { count: 'exact', head: true });
-        
-      if (!error) {
-        setStats(prev => ({ ...prev, totalProducts: count || 0 }));
+      try {
+        const data = await api.get('/products/count');
+        setStats(prev => ({ ...prev, totalProducts: data.count || 0 }));
+      } catch (err) {
+        console.error('Failed to fetch stats:', err);
       }
-      
-      // For now, we don't have an orders table, so activeOrders and totalSales stay 0
       setLoading(false);
     }
     fetchStats();
@@ -69,7 +65,7 @@ export default function Dashboard() {
                 <div className="stat-info">
                     <h3>Total Products</h3>
                     <div className="value danger">{loading ? '...' : stats.totalProducts}</div>
-                    <div className="subtext" style={{color: 'var(--danger)'}}>From Supabase</div>
+                    <div className="subtext" style={{color: 'var(--danger)'}}>From AWS RDS</div>
                 </div>
                 <div className="stat-icon danger">
                     <Box size={24} />

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { supabase } from '../lib/supabase';
+import { api } from '../lib/api';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -14,14 +14,11 @@ export default function ProductDetail() {
 
   useEffect(() => {
     async function fetchProduct() {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', id)
-        .single();
-        
-      if (!error && data) {
+      try {
+        const data = await api.get(`/products/${id}`);
         setProduct(data);
+      } catch (err) {
+        console.error('Failed to fetch product:', err);
       }
       setLoading(false);
     }
