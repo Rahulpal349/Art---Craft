@@ -11,6 +11,17 @@ const { SecretsManagerClient, GetSecretValueCommand } = require('@aws-sdk/client
 let pool = null;
 
 async function getDbCredentials() {
+  if (!process.env.DB_SECRET_ARN) {
+    // Local fallback using environment variables
+    require('dotenv').config({ path: require('path').join(__dirname, '../.env.migration') });
+    return {
+      host: process.env.RDS_HOST,
+      user: process.env.RDS_USER,
+      password: process.env.RDS_PASSWORD,
+      database: process.env.RDS_DATABASE || 'artcraft',
+      port: 5432
+    };
+  }
   const client = new SecretsManagerClient({ region: process.env.REGION || 'ap-southeast-2' });
   const command = new GetSecretValueCommand({ SecretId: process.env.DB_SECRET_ARN });
   const response = await client.send(command);

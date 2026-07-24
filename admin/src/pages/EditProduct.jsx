@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../lib/api';
 import { useNavigate, useParams } from 'react-router-dom';
+import ImageUpload from '../components/ImageUpload';
 
 export default function EditProduct() {
   const { id } = useParams();
@@ -8,6 +9,8 @@ export default function EditProduct() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -34,6 +37,7 @@ export default function EditProduct() {
           stock: data.stock?.toString() || '0',
           is_published: data.is_published || false
         });
+        setExistingImages(data.images || (data.image ? [data.image] : []));
       } catch (err) {
         setError('Product not found');
       }
@@ -56,6 +60,18 @@ export default function EditProduct() {
     setError(null);
 
     try {
+      const newImageUrls = [];
+      for (const file of imageFiles) {
+        try {
+          const url = await api.uploadImage(file);
+          newImageUrls.push(url);
+        } catch (imgErr) {
+          console.warn('Image upload skipped:', imgErr.message);
+        }
+      }
+
+      const finalImages = [...existingImages, ...newImageUrls];
+
       const updates = {
         name: formData.name,
         description: formData.description || null,
@@ -64,7 +80,9 @@ export default function EditProduct() {
         offer_price: formData.offer_price ? parseFloat(formData.offer_price) : null,
         category: formData.category || null,
         stock: parseInt(formData.stock, 10),
-        is_published: formData.is_published
+        is_published: formData.is_published,
+        image: finalImages[0] || null,
+        images: finalImages
       };
 
       await api.put(`/products/${id}`, updates);
@@ -118,6 +136,16 @@ export default function EditProduct() {
               <label style={{marginBottom: '0.5rem', color: 'var(--text-muted)'}}>Stock *</label>
               <input type="number" name="stock" required value={formData.stock} onChange={handleChange} style={{padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)', background: 'var(--bg-main)', color: 'var(--text-main)'}} />
             </div>
+          </div>
+
+          <div className="form-group" style={{display: 'flex', flexDirection: 'column', marginBottom: '1.5rem'}}>
+            <label style={{marginBottom: '0.5rem', color: 'var(--text-muted)'}}>Product Images (Up to 5)</label>
+            <ImageUpload 
+              files={imageFiles} 
+              existingImages={existingImages}
+              onFilesChange={setImageFiles} 
+              onExistingChange={setExistingImages}
+            />
           </div>
 
           <div className="form-group" style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem'}}>

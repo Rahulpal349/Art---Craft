@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { api } from '../lib/api';
 import { useNavigate } from 'react-router-dom';
+import ImageUpload from '../components/ImageUpload';
 
 export default function AddProduct() {
   const navigate = useNavigate();
@@ -118,10 +119,7 @@ export default function AddProduct() {
 
           <div className="form-group" style={{display: 'flex', flexDirection: 'column', marginBottom: '1.5rem'}}>
             <label style={{marginBottom: '0.5rem', color: 'var(--text-muted)'}}>Product Images (Up to 5)</label>
-            <input type="file" multiple accept="image/*" onChange={handleImageChange} style={{border: 'none', padding: 0, color: 'var(--text-main)'}} />
-            <div style={{fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem'}}>
-              {imageFiles.length} file(s) selected
-            </div>
+            <ImageUpload files={imageFiles} onFilesChange={setImageFiles} />
           </div>
 
           <div className="form-group" style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem'}}>

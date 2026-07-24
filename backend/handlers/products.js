@@ -16,6 +16,33 @@ const { query } = require('../db');
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
+const CDN_DOMAIN = process.env.CLOUDFRONT_DOMAIN;
+const S3_BUCKET  = process.env.S3_BUCKET;
+
+/**
+ * Rewrite any direct S3 URLs to the CloudFront CDN domain.
+ * This ensures images are always served through CloudFront, which has
+ * public read access via OAI — the S3 bucket itself blocks direct access.
+ */
+function rewriteImageUrl(url) {
+  if (!url || !CDN_DOMAIN) return url;
+  // Match both virtual-hosted and path-style S3 URLs
+  if (S3_BUCKET && url.includes(S3_BUCKET)) {
+    const key = url.replace(/^https?:\/\/[^/]+\//, '');
+    return `https://${CDN_DOMAIN}/${key}`;
+  }
+  return url;
+}
+
+function fixProductImages(product) {
+  if (!product) return product;
+  if (product.image) product.image = rewriteImageUrl(product.image);
+  if (Array.isArray(product.images)) {
+    product.images = product.images.map(rewriteImageUrl);
+  }
+  return product;
+}
+
 function response(statusCode, body) {
   return {
     statusCode,
@@ -53,7 +80,7 @@ async function listProducts(event) {
   sql += ' ORDER BY created_at DESC';
 
   const { rows } = await query(sql, params);
-  return response(200, rows);
+  return response(200, rows.map(fixProductImages));
 }
 
 async function countProducts() {
@@ -66,7 +93,7 @@ async function getProduct(id) {
   if (rows.length === 0) {
     return response(404, { error: 'Product not found' });
   }
-  return response(200, rows[0]);
+  return response(200, fixProductImages(rows[0]));
 }
 
 async function createProduct(event) {
@@ -97,7 +124,7 @@ async function createProduct(event) {
     ]
   );
 
-  return response(201, rows[0]);
+  return response(201, fixProductImages(rows[0]));
 }
 
 async function updateProduct(id, event) {
@@ -137,7 +164,7 @@ async function updateProduct(id, event) {
   );
 
   if (rows.length === 0) return response(404, { error: 'Product not found' });
-  return response(200, rows[0]);
+  return response(200, fixProductImages(rows[0]));
 }
 
 async function deleteProduct(id) {
