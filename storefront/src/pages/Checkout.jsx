@@ -71,9 +71,11 @@ export default function Checkout() {
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </Link>
           <div className="checkout-brand-container" style={{ textAlign: 'center' }}>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", margin: 0, fontSize: '2.2rem', fontStyle: 'italic', color: '#1e3a8a' }}>
-              Art <span style={{ color: '#E78895' }}>&</span> Craft
-            </h2>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", margin: 0, fontSize: '2.2rem', fontStyle: 'italic', color: '#1e3a8a' }}>
+                Art <span style={{ color: '#E78895' }}>&</span> Craft
+              </h2>
+            </Link>
           </div>
           <div className="checkout-secure-badge">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -119,38 +121,69 @@ export default function Checkout() {
                   </div>
                   1. Delivery Information
                 </h3>
-                </div>
+              </div>
+              
               <div className="address-form">
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Full Name</label>
-                    <input type="text" className="form-input" placeholder="e.g. Rahul Pal" value={shippingDetails.fullName} onChange={e => setShippingDetails({...shippingDetails, fullName: e.target.value})} />
+                    <input 
+                      type="text" 
+                      className="form-input" 
+                      placeholder="" 
+                      value={shippingDetails.fullName}
+                      onChange={(e) => setShippingDetails(prev => ({ ...prev, fullName: e.target.value }))}
+                    />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Phone Number</label>
-                    <input type="tel" className="form-input" placeholder="+91 xxxxx xxxxx" value={shippingDetails.phone} onChange={e => setShippingDetails({...shippingDetails, phone: e.target.value})} />
+                    <input 
+                      type="text" 
+                      className="form-input" 
+                      placeholder="" 
+                      value={shippingDetails.phone}
+                      onChange={(e) => setShippingDetails(prev => ({ ...prev, phone: e.target.value }))}
+                    />
                   </div>
                 </div>
+
                 <div className="form-row">
                   <div className="form-group">
-                    <label className="form-label">
-                      Pincode
-                      {isFetchingPincode && <span className="pincode-loading"> (Fetching...)</span>}
-                    </label>
-                    <input type="text" className="form-input" placeholder="e.g. 722203" maxLength="6" value={shippingDetails.pincode} onChange={handlePincodeChange} />
+                    <label className="form-label">Pincode {isFetchingPincode && <span className="pincode-loading">(Checking...)</span>}</label>
+                    <input 
+                      type="text" 
+                      className="form-input" 
+                      placeholder="" 
+                      maxLength="6"
+                      value={shippingDetails.pincode}
+                      onChange={handlePincodeChange}
+                    />
                   </div>
                   <div className="form-group">
                     <label className="form-label">City / District</label>
-                    <input type="text" className="form-input bg-gray" placeholder="Auto-filled" value={shippingDetails.city} readOnly />
+                    <input 
+                      type="text" 
+                      className="form-input bg-gray" 
+                      placeholder="Auto-filled" 
+                      readOnly
+                      value={shippingDetails.city}
+                    />
                   </div>
                 </div>
+
                 <div className="form-group">
                   <label className="form-label">Address Line 1</label>
-                  <input type="text" className="form-input" placeholder="House No, Building, Street" value={shippingDetails.address1} onChange={e => setShippingDetails({...shippingDetails, address1: e.target.value})} />
+                  <input 
+                    type="text" 
+                    className="form-input" 
+                    placeholder="" 
+                    value={shippingDetails.address1}
+                    onChange={(e) => setShippingDetails(prev => ({ ...prev, address1: e.target.value }))}
+                  />
                 </div>
                 <div className="form-group">
                   <label className="form-label">Address Line 2 (Optional)</label>
-                  <input type="text" className="form-input" placeholder="Landmark, Area" value={shippingDetails.address2} onChange={e => setShippingDetails({...shippingDetails, address2: e.target.value})} />
+                  <input type="text" className="form-input" placeholder="" value={shippingDetails.address2} onChange={e => setShippingDetails({...shippingDetails, address2: e.target.value})} />
                 </div>
                 <div className="form-group">
                   <label className="form-label">State</label>
