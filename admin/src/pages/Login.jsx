@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Lock, User, ArrowRight, ShieldCheck } from 'lucide-react';
+import BrandText from '../components/BrandText';
 import './Login.css';
 
 export default function Login() {
@@ -38,8 +39,9 @@ export default function Login() {
       <div className={`login-glass-card ${isLoaded ? 'animate-in' : ''}`}>
         <div className="login-card-inner">
           <div className="login-header">
-            <div className="logo-icon-wrapper">
-              <ShieldCheck className="logo-icon" size={36} />
+            <div className="logo-icon-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+              <img src="/assets/images/logo.png" alt="Art & Craft Logo" style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover' }} onError={(e) => { e.target.src = "/favicon.svg"; }} />
+              <BrandText mode="stacked" size="small" theme="dark" />
             </div>
             <h2>Admin Secure Access</h2>
             <p>Enter your credentials to access the artisan workspace</p>

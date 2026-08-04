@@ -1,112 +1,70 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
+import '../assets/styles/about.css';
 
 export default function About() {
   return (
-    <div className="about-page">
-      {/* Hero Section */}
-      <section style={{ position: 'relative', height: '80vh', minHeight: '600px', display: 'flex', alignItems: 'center', background: 'url(https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=1600&auto=format&fit=crop) center/cover no-repeat' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 50%, transparent 100%)' }}></div>
-        <div style={{ position: 'relative', zIndex: 1, padding: '0 10%', maxWidth: '800px' }}>
-          <div style={{ fontSize: '0.75rem', letterSpacing: '0.1em', color: '#1e3a8a', fontWeight: 600, textTransform: 'uppercase', marginBottom: '1rem' }}>ESTABLISHED 2024</div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '4rem', color: '#0f172a', margin: '0 0 1.5rem', lineHeight: 1.1 }}>
-            The Quiet Luxury of Hand-Made
+    <div className="about-page-container">
+      {/* Decorative watercolor splashes */}
+      <div className="watercolor-splash splash-top-left"></div>
+      <div className="watercolor-splash splash-bottom-right"></div>
+      
+      <div className="about-content-wrapper">
+        <div className="about-text-section">
+          <h1 className="about-title">
+            About <span className="about-script">Us</span> <span className="about-heart">♡</span>
           </h1>
-          <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, maxWidth: '500px' }}>
-            Art & Craft is a curated sanctuary for master craftsmanship, where every object tells a story of patience, material, and the human hand.
-          </p>
-        </div>
-      </section>
-
-      {/* Our Mission Section */}
-      <section style={{ padding: '6rem 10%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
-        <div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', color: '#0f172a', margin: '0 0 2rem' }}>Our Mission</h2>
-          <div style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.8 }}>
-            <p style={{ marginBottom: '1.5rem' }}>
-              In an era of mass production, Art & Craft serves as a bridge between traditional heritage and contemporary living. We believe that the objects we surround ourselves with should possess a soul.
-            </p>
-            <p>
-              Our gallery exclusively partners with independent artisans who honor ancestral techniques while pushing the boundaries of modern design. We curate pieces that are intended to be lived with, touched, and passed down through generations.
-            </p>
-          </div>
-        </div>
-        <div style={{ position: 'relative' }}>
-          <img src="https://images.unsplash.com/photo-1620619767323-b95a89183081?q=80&w=800&auto=format&fit=crop" alt="Crafting glass" style={{ width: '100%', height: 'auto', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} />
-          <div style={{ position: 'absolute', bottom: '-2rem', right: '-2rem', background: '#f0f4f8', padding: '2rem', border: '1px solid #e2e8f0', maxWidth: '250px' }}>
-            <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.25rem', fontStyle: 'italic', color: '#1e3a8a', margin: 0, lineHeight: 1.4 }}>
-              "Every piece is unique."
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* The Handmade Process Section */}
-      <section style={{ padding: '6rem 10%', background: '#f8fafc', textAlign: 'center' }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', color: '#0f172a', margin: '0 0 1rem' }}>The Handmade Process</h2>
-        <p style={{ color: '#475569', maxWidth: '600px', margin: '0 auto 4rem', lineHeight: 1.6 }}>
-          From raw material to finished masterpiece, witness the journey of creation that happens within our partner studios.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-          <div style={{ gridRow: 'span 2' }}>
-            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop" alt="Pottery wheel top down" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          </div>
-          <div>
-            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=800&auto=format&fit=crop" alt="Textile weaving" style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-            <img src="https://images.unsplash.com/photo-1604578762246-41134e37f9cc?q=80&w=400&auto=format&fit=crop" alt="Woodworking" style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
-            <img src="https://images.unsplash.com/photo-1620619767323-b95a89183081?q=80&w=400&auto=format&fit=crop" alt="Glass blowing" style={{ width: '100%', height: '300px', objectFit: 'cover' }} />
-          </div>
-        </div>
-      </section>
-
-      {/* Meet the Artisans Section */}
-      <section style={{ padding: '6rem 10%' }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', color: '#0f172a', margin: '0 0 4rem', textAlign: 'center' }}>Meet the Artisans</h2>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }}>
           
-          <div>
-            <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop" alt="Elena Rossi" style={{ width: '100%', height: '400px', objectFit: 'cover', filter: 'grayscale(100%)' }} />
-              <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: '#3b82f6', color: 'white', padding: '0.25rem 0.75rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Ceramics</div>
+          <div className="about-text-content">
+            <h3 className="about-greeting">Welcome to Art & Craft, where creativity meets elegance.</h3>
+            <p>
+              Hi, I am <strong>Rahul Pal</strong> Founder of Art & Craft. I am an Electrical Engineer by profession but a handmade lover at heart and started this place to add lovely handmade things into the ordinary households.
+            </p>
+            
+            <p>
+              Each piece is thoughtfully designed, blending artistry, craftsmanship and timeless style to bring warmth and personality to your living space. Whether for your home or that perfect gift, our purpose is simple:
+            </p>
+            
+            <p className="about-thank-you">
+              Turning fine craftsmanship into treasured memories.
+            </p>
+            
+            <div className="about-signoff">
+              <span className="signoff-name">— Rahul Pal</span>
+              <span className="signoff-title">Founder, Art & Craft</span>
             </div>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', margin: '0 0 0.5rem', color: '#0f172a' }}>Elena Rossi</h3>
-            <p style={{ color: '#64748b', fontStyle: 'italic', fontSize: '0.9rem', lineHeight: 1.5 }}>"My work is a dialogue between the clay and the coastal tides of my home."</p>
           </div>
-
-          <div>
-            <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Julian Thorne" style={{ width: '100%', height: '400px', objectFit: 'cover', filter: 'grayscale(100%)' }} />
-              <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: '#3b82f6', color: 'white', padding: '0.25rem 0.75rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Woodwork</div>
+          
+          <div className="about-features-row">
+            <div className="feature-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              <span>Handmade<br/>with Love</span>
             </div>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', margin: '0 0 0.5rem', color: '#0f172a' }}>Julian Thorne</h3>
-            <p style={{ color: '#64748b', fontStyle: 'italic', fontSize: '0.9rem', lineHeight: 1.5 }}>"I listen to the grain. The wood tells me what it wants to become."</p>
-          </div>
-
-          <div>
-            <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
-              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop" alt="Sanae Tanaka" style={{ width: '100%', height: '400px', objectFit: 'cover', filter: 'grayscale(100%)' }} />
-              <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: '#3b82f6', color: 'white', padding: '0.25rem 0.75rem', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Textiles</div>
+            <div className="feature-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+              <span>Inspired by<br/>Nature</span>
             </div>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', margin: '0 0 0.5rem', color: '#0f172a' }}>Sanae Tanaka</h3>
-            <p style={{ color: '#64748b', fontStyle: 'italic', fontSize: '0.9rem', lineHeight: 1.5 }}>"Capturing light in a wool thread is the ultimate pursuit of clarity."</p>
+            <div className="feature-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+              <span>Premium<br/>Quality</span>
+            </div>
+            <div className="feature-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              <span>Made to Decorate<br/>Your Home</span>
+            </div>
           </div>
-
+          
+          <div className="about-banner-quote">
+            The art you love, placed in your home. ♡
+          </div>
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section style={{ padding: '6rem 10%', background: '#0f172a', color: 'white', textAlign: 'center' }}>
-        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', margin: '0 0 1rem' }}>Bring the Artisan Home</h2>
-        <p style={{ color: '#cbd5e1', maxWidth: '500px', margin: '0 auto 2.5rem', lineHeight: 1.6 }}>
-          Discover our seasonal collections and find a piece that resonates with your space.
-        </p>
-        <Link to="/collections" className="btn btn-outline" style={{ background: 'white', color: '#0f172a', borderColor: 'white' }}>
-          EXPLORE COLLECTIONS
-        </Link>
-      </section>
+        <div className="about-image-section">
+           <div className="founder-photo-container">
+               <img src="/assets/images/founder.jpg" alt="Rahul Pal" className="founder-photo" />
+           </div>
+        </div>
+      </div>
     </div>
   );
 }

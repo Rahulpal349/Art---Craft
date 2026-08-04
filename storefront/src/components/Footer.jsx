@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
+import BrandText from './BrandText';
 
 export default function Footer() {
   return (
     <footer>
         <div className="footer-grid">
             <div>
-                <h2 style={{color: "var(--white)", marginBottom: "1rem"}}>
-                  <img src="/assets/images/logo.svg" alt="Logo" style={{height: "32px", verticalAlign: "middle", marginRight: "8px"}} />
-                  Art & Craft
+                <h2 style={{color: "#0f172a", marginBottom: "0.35rem", display: "flex", alignItems: "center", gap: "8px"}}>
+                  <img src="/assets/images/logo.png" alt="Logo" style={{height: "44px", width: "44px", borderRadius: "50%", objectFit: "cover"}} onError={(e) => { e.target.src = "/assets/images/logo.svg"; }} />
+                  <BrandText mode="inline" size="normal" theme="dark" />
                 </h2>
-                <p style={{color: "#cbd5e1"}}>Curating the world's most exceptional handmade artifacts for the discerning modern home since 2024.</p>
+                <p className="footer-brand-desc">Curating the world's most exceptional handmade artifacts for the discerning modern home since 2026.</p>
             </div>
             <div>
                 <h4>Shop</h4>

@@ -9,34 +9,26 @@ const SLIDES = [
     title: "The Quiet Luxury of Hand-Made",
     description: "Crafted with Soul, Shipped with Love. Discover our curated sanctuary for master craftsmanship.",
     buttons: [
-      { text: "Shop Now", link: "/shop", primary: true },
-      { text: "Our Story", link: "/about", primary: false }
+      { text: "Shop Now", link: "/collections", primary: true }
     ]
   },
   {
     image: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?q=80&w=2070&auto=format&fit=crop",
     title: "Timeless Ceramic Art",
     description: "Elevate your space with our unique, wheel-thrown ceramic collections.",
-    buttons: [
-      { text: "Explore Ceramics", link: "/shop", primary: true }
-    ]
+    buttons: []
   },
   {
     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop",
     title: "Sustainable Living",
     description: "Ethically sourced materials designed for the modern eco-conscious home.",
-    buttons: [
-      { text: "Shop Eco", link: "/shop", primary: true }
-    ]
+    buttons: []
   },
   {
     image: "https://images.unsplash.com/photo-1615873968403-89e068629265?q=80&w=2070&auto=format&fit=crop",
     title: "Bespoke Furniture",
     description: "Custom-crafted pieces that tell a story in every grain of wood.",
-    buttons: [
-      { text: "View Collection", link: "/shop", primary: true },
-      { text: "Custom Order", link: "/contact", primary: false }
-    ]
+    buttons: []
   }
 ];
 
@@ -113,8 +105,6 @@ export default function Home() {
           </div>
           
           {/* Slider Controls */}
-          <button className="slider-btn prev-btn" onClick={() => setCurrentSlide((prev) => (prev - 1 + SLIDES.length) % SLIDES.length)}>&#10094;</button>
-          <button className="slider-btn next-btn" onClick={() => setCurrentSlide((prev) => (prev + 1) % SLIDES.length)}>&#10095;</button>
           <div className="slider-dots">
               {SLIDES.map((_, index) => (
                 <span 

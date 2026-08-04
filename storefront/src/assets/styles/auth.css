@@ -262,6 +262,34 @@
   text-decoration: underline;
 }
 
+/* Back Link Header */
+.auth-mobile-header {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.auth-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 550;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+}
+
+.auth-back-link:hover {
+  color: #0f172a;
+  background: #e2e8f0;
+  transform: translateX(-3px);
+}
+
 /* Responsive Layout */
 @media (max-width: 768px) {
   .auth-card-split {
@@ -273,6 +301,10 @@
   }
   
   .auth-right-panel {
-    padding: 3rem 2rem;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .auth-mobile-header {
+    margin-bottom: 1.25rem;
   }
 }

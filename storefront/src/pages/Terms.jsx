@@ -2,7 +2,7 @@ export default function Terms() {
   return (
     <div className="terms-page" style={{ padding: '4rem 5%', background: '#f8fafc' }}>
       <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-        <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#1e3a8a', fontWeight: 600, textTransform: 'uppercase', marginBottom: '1rem' }}>Last Updated - October 24, 2024</div>
+        <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#1e3a8a', fontWeight: 600, textTransform: 'uppercase', marginBottom: '1rem' }}>Last Updated - March 24, 2026</div>
         <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '3rem', color: '#0f172a', margin: '0 0 1.5rem' }}>Terms of Service</h1>
         <p style={{ color: '#475569', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>Please read these terms carefully before using Art & Craft. We aim to keep our guidelines as clear and artisanal as our products.</p>
       </div>
