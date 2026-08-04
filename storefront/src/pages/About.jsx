@@ -58,12 +58,6 @@ export default function About() {
             The art you love, placed in your home. ♡
           </div>
         </div>
-
-        <div className="about-image-section">
-           <div className="founder-photo-container">
-               <img src="/assets/images/founder.jpg" alt="Rahul Pal" className="founder-photo" />
-           </div>
-        </div>
       </div>
     </div>
   );

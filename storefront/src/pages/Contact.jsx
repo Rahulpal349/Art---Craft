@@ -1,112 +1,110 @@
+import React from 'react';
+import '../assets/styles/contact.css';
+
 export default function Contact() {
   return (
-    <div className="contact-page" style={{ padding: '6rem 5%', background: '#fff' }}>
-      
-      <div style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '4rem' }}>
-        <div style={{ fontSize: '0.75rem', letterSpacing: '0.1em', color: '#1e3a8a', fontWeight: 600, textTransform: 'uppercase', marginBottom: '1rem' }}>Get In Touch</div>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '3rem', color: '#0f172a', margin: '0 0 1.5rem', maxWidth: '800px', lineHeight: 1.2 }}>
-          Connect with our Studio for Bespoke Commissions and Curated Inquiries.
-        </h1>
-        <p style={{ color: '#475569', fontSize: '1.1rem', maxWidth: '600px', lineHeight: 1.6 }}>
-          We believe in the power of the hand-made. Whether you're an interior designer, a collector, or looking for a unique piece, we are here to assist.
-        </p>
+    <div className="contact-page-container">
+      {/* Decorative watercolor splashes */}
+      <div className="contact-decor decor-top-left"></div>
+      <div className="contact-decor decor-bottom-right"></div>
+
+      <div className="contact-header">
+        <h1 className="contact-title">Contact Us</h1>
+        <div className="contact-divider">
+          <div className="contact-divider-line left"></div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <div className="contact-divider-line right"></div>
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem', maxWidth: '1200px', margin: '0 auto', marginBottom: '8rem' }}>
-        
-        {/* Contact Form */}
-        <div style={{ border: '1px solid #e2e8f0', padding: '3rem', borderRadius: '4px', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.75rem', color: '#0f172a', marginBottom: '2rem' }}>Send a Message</h2>
-          <form className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-            <div className="auth-form-group">
-              <label>Full Name</label>
-              <input type="text" className="auth-input" placeholder="Julian Thorne" style={{ border: 'none', borderBottom: '1px solid #e2e8f0', borderRadius: 0, padding: '0.75rem 0' }} />
+      <div className="contact-content">
+        {/* Left Column: Details */}
+        <div className="contact-details">
+          
+          <div className="contact-detail-item">
+            <div className="contact-icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             </div>
-            <div className="auth-form-group">
-              <label>Email Address</label>
-              <input type="email" className="auth-input" placeholder="julian@example.com" style={{ border: 'none', borderBottom: '1px solid #e2e8f0', borderRadius: 0, padding: '0.75rem 0' }} />
+            <div className="contact-detail-text">
+              <h4>Location</h4>
+              <p>Beliatore, Bankura,<br/>West Bengal 722203</p>
             </div>
-            <div className="auth-form-group" style={{ gridColumn: '1 / -1' }}>
-              <label>Inquiry Type</label>
-              <select className="auth-input" style={{ border: 'none', borderBottom: '1px solid #e2e8f0', borderRadius: 0, padding: '0.75rem 0', appearance: 'none', background: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E") no-repeat right 0 top 50%', backgroundSize: '0.65rem auto' }}>
-                <option>Bespoke Commission</option>
-                <option>General Inquiry</option>
-                <option>Press & Media</option>
-              </select>
+          </div>
+
+          <div className="contact-detail-item">
+            <div className="contact-icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             </div>
-            <div className="auth-form-group" style={{ gridColumn: '1 / -1' }}>
-              <label>Your Message</label>
-              <textarea className="auth-input" placeholder="Tell us about your project or interest..." style={{ border: 'none', borderBottom: '1px solid #e2e8f0', borderRadius: 0, padding: '0.75rem 0', height: '100px', resize: 'vertical' }}></textarea>
+            <div className="contact-detail-text">
+              <h4>Email</h4>
+              <p>therahulpal@zohomail.in</p>
             </div>
-            <div style={{ gridColumn: '1 / -1', marginTop: '1rem' }}>
-              <button type="button" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                Send Inquiry
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-              </button>
+          </div>
+
+          <div className="contact-detail-item">
+            <div className="contact-icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
             </div>
+            <div className="contact-detail-text">
+              <h4>Phone</h4>
+              <p>+91 9679727399</p>
+            </div>
+          </div>
+
+          <div className="contact-detail-item">
+            <div className="contact-icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+            </div>
+            <div className="contact-detail-text">
+              <h4>Maps Link</h4>
+              <a href="https://www.google.com/maps/place/SWAPNANIR/@23.3166381,87.2130298,20z/data=!4m6!3m5!1s0x39f7a100274dfce1:0x7e42aed0a6cf1fb2!8m2!3d23.3166381!4d87.2133005!16s%2Fg%2F11vycwlr57?entry=ttu&g_ep=EgoyMDI2MDcyOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">
+                Open in Google Maps
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Right Column: Form */}
+        <div className="contact-form-card">
+          <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+            
+            <div className="contact-input-group">
+              <svg className="contact-input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <input type="text" className="contact-input" placeholder="Your Name" />
+            </div>
+
+            <div className="contact-input-group">
+              <svg className="contact-input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <input type="email" className="contact-input" placeholder="Your Email" />
+            </div>
+
+            <div className="contact-input-group">
+              <svg className="contact-input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <input type="tel" className="contact-input" placeholder="Your Phone" />
+            </div>
+
+            <div className="contact-input-group">
+              <svg className="contact-input-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <input type="text" className="contact-input" placeholder="Subject" />
+            </div>
+
+            <div className="contact-input-group">
+              <svg className="contact-input-icon contact-textarea-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              <textarea className="contact-input" placeholder="Your Message"></textarea>
+            </div>
+
+            <button type="submit" className="contact-submit">
+              Send Message
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+
           </form>
         </div>
-
-        {/* Info Column */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <div style={{ background: '#f0f8ff', padding: '2rem', borderRadius: '4px' }}>
-            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', color: '#0f172a', marginBottom: '1.5rem' }}>The Studio</h3>
-            
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '0.25rem' }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <div>
-                <strong style={{ display: 'block', color: '#0f172a', marginBottom: '0.25rem', fontSize: '0.9rem' }}>London Atelier</strong>
-                <span style={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.5 }}>42 Artisan Row, Shoreditch<br/>London, E1 6PX</span>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', gap: '1rem' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-              <div>
-                <strong style={{ display: 'block', color: '#0f172a', marginBottom: '0.25rem', fontSize: '0.9rem' }}>Direct Email</strong>
-                <span style={{ color: '#475569', fontSize: '0.9rem' }}>studio@artandcraft.com</span>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ background: '#f1f5f9', padding: '2rem', borderRadius: '4px' }}>
-            <div style={{ fontSize: '0.75rem', letterSpacing: '0.05em', color: '#1e3a8a', fontWeight: 600, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Concierge Support</div>
-            <p style={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-              For immediate assistance regarding ongoing orders or gallery availability, connect via our WhatsApp concierge.
-            </p>
-            <button style={{ background: 'none', border: '1px solid #94a3b8', padding: '0.75rem 1.5rem', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, color: '#0f172a', cursor: 'pointer' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-              WhatsApp Concierge
-            </button>
-          </div>
-
-          <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=600&auto=format&fit=crop" alt="Studio Shelf" style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '4px', filter: 'grayscale(100%)' }} />
-        </div>
       </div>
-
-      {/* Map Section */}
-      <div style={{ background: '#f8fafc', padding: '6rem 0', margin: '0 -5%' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 5%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
-          <div>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '2.5rem', color: '#0f172a', margin: '0 0 1rem' }}>Where Craft Meets Home</h2>
-            <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
-              Our studio is located in the heart of London's craft district. We welcome scheduled viewings for our permanent collection and upcoming limited edition releases.
-            </p>
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <a href="#" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1e3a8a', textDecoration: 'underline', textTransform: 'uppercase', letterSpacing: '0.05em' }}>View on Maps</a>
-              <a href="#" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#1e3a8a', textDecoration: 'underline', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Book a Visit</a>
-            </div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <div style={{ background: '#1e293b', padding: '1rem', borderRadius: '32px', width: '300px', height: '600px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
-              <div style={{ width: '100%', height: '100%', borderRadius: '24px', overflow: 'hidden', background: 'url(https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=400&auto=format&fit=crop) center/cover' }}>
-                {/* Simulated Map UI */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   );
 }

@@ -39,10 +39,8 @@
 .about-content-wrapper {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .about-text-section {

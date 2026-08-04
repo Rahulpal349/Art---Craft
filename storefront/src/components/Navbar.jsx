@@ -17,7 +17,7 @@ export default function Navbar() {
   return (
     <>
       <div className="announcement-bar">
-          Free Delivery Above ₹499 | Handmade with Love
+          Products starts at Rs.99 | Free Delivery Above ₹499
       </div>
       <nav className="navbar">
           <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
