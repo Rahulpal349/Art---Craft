@@ -185,7 +185,8 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top: -1rem; /* overlap slightly */
+    margin-top: -1rem;
+    /* overlap slightly */
 }
 
 /* Quantity Controls */
@@ -325,7 +326,6 @@
 }
 
 .cart-summary-row span:first-child {
-    max-width: 90px;
     line-height: 1.5;
 }
 
@@ -452,23 +452,23 @@
     .cart-summary-card {
         flex-direction: column;
     }
-    
+
     .cart-summary-decor {
         display: none;
     }
-    
+
     .cart-summary-details {
         padding-left: 0;
     }
-    
+
     .cart-header h1 {
         font-size: 2.5rem;
     }
-    
+
     .cart-trust-badges {
         display: flex !important;
     }
-    
+
     .cart-footer-features {
         display: none;
     }

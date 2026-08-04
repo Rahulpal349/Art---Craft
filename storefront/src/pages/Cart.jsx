@@ -22,7 +22,7 @@ export default function Cart() {
       <div className="cart-decor cart-decor-top-right"></div>
 
       <div className="cart-content">
-        
+
         <div className="cart-header">
           <h1>My Cart</h1>
         </div>
@@ -31,7 +31,7 @@ export default function Cart() {
           <div style={{ textAlign: 'center', padding: '4rem 1rem', background: 'white', borderRadius: '12px', boxShadow: '0 4px 15px rgba(30, 58, 138, 0.05)' }}>
             <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>Your cart is empty</h2>
             <p style={{ color: '#64748b', marginBottom: '2rem' }}>Looks like you haven't added any beautiful pieces yet.</p>
-            <Link to="/shop" className="cart-checkout-btn" style={{ display: 'inline-flex', width: 'auto', padding: '1rem 2rem' }}>
+            <Link to="/collections" className="cart-checkout-btn" style={{ display: 'inline-flex', width: 'auto', padding: '1rem 2rem' }}>
               Start Shopping
             </Link>
           </div>
@@ -43,7 +43,7 @@ export default function Cart() {
                 {cart.map(item => (
                   <div key={item.id} className="cart-item-card">
                     <img src={item.images?.[0] || item.image || item.img || 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=600&auto=format&fit=crop'} alt={item.name} className="cart-item-img" />
-                    
+
                     <div className="cart-item-details">
                       <div className="cart-item-top">
                         <div>
@@ -85,21 +85,12 @@ export default function Cart() {
             <div className="cart-sidebar-col">
               {/* Order Summary */}
               <div className="cart-summary-card">
-                <div className="cart-summary-decor">
-                  <svg width="80" height="120" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg" style={{opacity: 0.7}}>
-                    <path d="M50 140 C 30 90, 10 50, 40 10 C 60 40, 80 80, 50 140 Z" fill="#eff6ff"/>
-                    <path d="M50 140 C 40 100, 20 70, 45 30" stroke="#93c5fd" strokeWidth="2" fill="none"/>
-                    <path d="M48 110 C 20 100, 5 70, 25 50 C 40 70, 45 90, 48 110 Z" fill="#bfdbfe"/>
-                    <path d="M52 90 C 70 80, 90 60, 75 40 C 60 55, 55 75, 52 90 Z" fill="#bfdbfe"/>
-                    <path d="M46 70 C 15 60, 5 30, 25 10 C 40 30, 43 50, 46 70 Z" fill="#93c5fd"/>
-                  </svg>
-                </div>
                 <div className="cart-summary-details">
                   <div className="cart-summary-header">
                     <div className="cart-summary-header-icon">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                     </div>
-                    <h3>Order<br/>Summary</h3>
+                    <h3>Order Summary</h3>
                   </div>
 
                   <div className="cart-summary-row">
@@ -116,9 +107,9 @@ export default function Cart() {
                       <span>-₹{discount.toFixed(2)}</span>
                     </div>
                   )}
-                  
+
                   <hr className="cart-summary-divider" />
-                  
+
                   <div className="cart-summary-total">
                     <span>Total</span>
                     <span>₹{totalAmount.toFixed(2)}</span>
@@ -162,7 +153,7 @@ export default function Cart() {
                 <span className="cart-feature-sub">100% secure payments</span>
               </div>
             </div>
-            
+
             <div className="cart-feature-item">
               <div className="cart-feature-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
@@ -172,7 +163,7 @@ export default function Cart() {
                 <span className="cart-feature-sub">Hassle-free returns</span>
               </div>
             </div>
-            
+
             <div className="cart-feature-item">
               <div className="cart-feature-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
@@ -182,7 +173,7 @@ export default function Cart() {
                 <span className="cart-feature-sub">Pan India Delivery</span>
               </div>
             </div>
-            
+
             <div className="cart-feature-item">
               <div className="cart-feature-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>

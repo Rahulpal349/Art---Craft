@@ -44,7 +44,7 @@ export default function ProductDetail() {
     return (
       <div className="product-detail-page" style={{ padding: '4rem 5%', textAlign: 'center' }}>
         <h2>Product not found.</h2>
-        <Link to="/shop" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>Back to Shop</Link>
+        <Link to="/collections" className="btn btn-primary" style={{ marginTop: '1rem', display: 'inline-block' }}>Back to Shop</Link>
       </div>
     );
   }
@@ -65,7 +65,7 @@ export default function ProductDetail() {
   return (
     <div className="product-detail-page">
       <div className="breadcrumb" style={{ fontSize: '0.8rem', color: '#64748b', padding: '2rem 5%', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-        <Link to="/shop" style={{ color: '#64748b', textDecoration: 'none' }}>Shop</Link>
+        <Link to="/collections" style={{ color: '#64748b', textDecoration: 'none' }}>Shop</Link>
         <span>/</span>
         {product.category && (
           <>
