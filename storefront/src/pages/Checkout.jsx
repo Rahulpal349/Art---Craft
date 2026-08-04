@@ -70,13 +70,10 @@ export default function Checkout() {
           <Link to="/cart" className="checkout-back-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </Link>
-          <div className="checkout-brand-container">
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", margin: 0, fontSize: '2rem', fontStyle: 'italic', color: '#1e3a8a' }}>Art & Craft</h2>
-            <div style={{ fontSize: '0.65rem', letterSpacing: '0.15em', color: '#1e3a8a', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', marginTop: '2px', fontWeight: 500 }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-              ART IN YOUR HOME
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </div>
+          <div className="checkout-brand-container" style={{ textAlign: 'center' }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", margin: 0, fontSize: '2.2rem', fontStyle: 'italic', color: '#1e3a8a' }}>
+              Art <span style={{ color: '#E78895' }}>&</span> Craft
+            </h2>
           </div>
           <div className="checkout-secure-badge">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
