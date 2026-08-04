@@ -99,7 +99,7 @@ a:hover {
 /* Announcement Bar */
 .announcement-bar {
     background-color: var(--accent);
-    color: var(--primary);
+    color: #000;
     text-align: center;
     padding: 0.5rem;
     font-size: 0.875rem;
@@ -112,8 +112,9 @@ a:hover {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 5%;
-    background-color: var(--white);
-    box-shadow: var(--shadow-sm);
+    background-color: #f0f7ff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(30, 58, 95, 0.05);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -135,6 +136,11 @@ a:hover {
 .nav-links a {
     font-weight: 500;
     font-size: 0.95rem;
+    color: #000;
+}
+
+.nav-links a:hover {
+    color: #444;
 }
 
 .nav-links .mobile-only-account {
@@ -145,6 +151,14 @@ a:hover {
     display: flex;
     gap: 1rem;
     align-items: center;
+}
+
+.nav-icons a {
+    color: #000;
+}
+
+.nav-icons a:hover {
+    color: #444;
 }
 
 .mobile-menu-toggle {
@@ -771,16 +785,8 @@ footer {
 @media (max-width: 768px) {
     .navbar { flex-wrap: wrap; }
     .nav-links { 
-        display: flex; 
-        width: 100%; 
-        order: 3; 
-        margin-top: 1rem; 
-        overflow-x: auto; 
-        padding-bottom: 0.5rem; 
-        justify-content: flex-start;
-        -webkit-overflow-scrolling: touch;
+        display: none; 
     }
-    .nav-links::-webkit-scrollbar { display: none; }
     .hero h1 { font-size: 2.5rem; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
     .usp-section { flex-direction: row; gap: 0.5rem; justify-content: space-around; }

@@ -50,7 +50,7 @@ export function CartProvider({ children }) {
     setCart([]);
   };
 
-  const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const cartTotal = cart.reduce((total, item) => total + ((Number(item.offer_price || item.regular_price || item.price) || 0) * item.quantity), 0);
   const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   const value = {
